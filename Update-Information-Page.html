@@ -10,40 +10,6 @@
 <body>
     <nav class="navbar">
         <div class="nav-links">
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Home</a>
-                <div class="dropdown-content">
-                    <a href="#">Dashboard</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Patient Portal</a>
-                <div class="dropdown-content">
-                    <a href="#">View Results</a>
-                    <a href="profile.html">Profile</a>
-                    <a href="#">Appointment</a>
-                    <a href="#">Billing</a>
-                    <a href="#">Medical Record</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Laboratory Tests</a>
-                <div class="dropdown-content">
-                    <a href="#">Test Result</a>
-                    <a href="#">Request Tests</a>
-                    <a href="#">Test History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Settings</a>
-                <div class="dropdown-content">
-                    <a href="#">Security Setting</a>
-                </div>
-            </div>
-            
             <span class="welcome">Welcome, Dr. Smith!</span>
             <div class="hamburger">
                 <i class="fas fa-bars"></i>
@@ -54,7 +20,6 @@
     <div class="edit-profile-container">
         <div class="edit-header">
             <h1><i class="fas fa-user-edit"></i> Edit Profile Information</h1>
-            <p class="back-link"><a href="profile.html"><i class="fas fa-arrow-left"></i> Back to Profile</a></p>
         </div>
 
         <form class="edit-profile-form">
@@ -188,8 +153,8 @@ Hyperlipidemia (diagnosed 2020)</textarea>
             </div>
 
             <div class="form-actions">
-                <button type="button" class="cancel-btn">Cancel</button>
-                <button type="submit" class="save-btn">Save Changes</button>
+                <button type="button" class="cancel-btn" onclick="if(confirm('Discard all changes?')) window.location.href='Profile-Page.html'">Cancel</button>
+                <button type="button" class="save-btn" onclick="if(confirm('Save changes?')) window.location.href='Profile-Page.html'">Submit</button>
             </div>
         </form>
     </div>

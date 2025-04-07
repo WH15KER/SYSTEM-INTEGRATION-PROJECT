@@ -129,7 +129,7 @@ body {
 }
 
 .edit-header h1 {
-    color: #095461;
+    color: #f1f1f1;
     font-size: 1.8rem;
     display: flex;
     align-items: center;
@@ -141,9 +141,9 @@ body {
 }
 
 .back-link a {
-    color: #095461;
+    color: #e6ebec;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: bolder;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
