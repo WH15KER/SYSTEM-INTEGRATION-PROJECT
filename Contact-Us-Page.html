@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal</title>
+    <link rel="stylesheet" href="Contact-Us-Page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-links">
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Home</a>
+                <div class="dropdown-content">
+                    <a href="#">Dashboard</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Patient Portal</a>
+                <div class="dropdown-content">
+                    <a href="#">View Results</a>
+                    <a href="#">Profile</a>
+                    <a href="#">Appointment</a>
+                    <a href="#">Billing</a>
+                    <a href="#">Medical Record</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Laboratory Tests</a>
+                <div class="dropdown-content">
+                    <a href="#">Test Result</a>
+                    <a href="#">Request Tests</a>
+                    <a href="#">Test History</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Settings</a>
+                <div class="dropdown-content">
+                    <a href="#">Security Setting</a>
+                </div>
+            </div>
+            
+            <span class="welcome">Welcome, User!</span>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="form-container">
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" class="form-input" placeholder="Enter your name">
+            </div>
+            
+            <div class="form-group">
+                <label for="surname">Surname</label>
+                <input type="text" id="surname" class="form-input" placeholder="Enter your surname">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-input" placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" class="form-input" placeholder="Enter your message"></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
