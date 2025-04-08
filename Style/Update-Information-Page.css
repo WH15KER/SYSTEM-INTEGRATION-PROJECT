@@ -140,16 +140,6 @@ body {
     color: #e97211;
 }
 
-.back-link a {
-    color: #e6ebec;
-    text-decoration: none;
-    font-weight: bolder;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: color 0.3s;
-}
-
 .back-link a:hover {
     color: #e97211;
 }
