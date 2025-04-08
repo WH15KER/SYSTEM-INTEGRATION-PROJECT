@@ -3,110 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Checks</title>
+    <title>Medical Checks - Your Health Companion</title>
     <link rel="stylesheet" href="Style/Home-Page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="nav-links">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MedicalChecks</span>
+            </div>
+            
+            <!-- Navigation Links (Hidden when logged out) -->
+            <div class="nav-links" id="mainNavLinks">
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Home</a>
                     <div class="dropdown-content">
-                        <a href="Home-Page.html">Dashboard</a>
-                        <a href="Contact-Us-Page.html">Contact Us</a>
+                        <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
                     </div>
                 </div>
                 
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Patient Portal</a>
                     <div class="dropdown-content">
-                        <a href="Profile-Page.html">Profile</a>
-                        <a href="#">Appointment</a>
-                        <a href="#">Billing</a>
-                        <a href="#">Medical Record</a>
+                        <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="#"><i class="fas fa-calendar-check"></i> Appointment</a>
+                        <a href="#"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                        <a href="#"><i class="fas fa-file-medical"></i> Medical Record</a>
                     </div>
                 </div>
                 
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Laboratory Tests</a>
                     <div class="dropdown-content">
-                        <a href="Test-Results-Page.html">Test Result</a>
-                        <a href="#">Request Tests</a>
-                        <a href="#">Test History</a>
+                        <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                        <a href="#"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                        <a href="#"><i class="fas fa-history"></i> Test History</a>
                     </div>
                 </div>
                 
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Settings</a>
                     <div class="dropdown-content">
-                        <a href="#">Security Setting</a>
+                        <a href="#"><i class="fas fa-shield-alt"></i> Security Setting</a>
                     </div> 
                 </div>
-            <div class="auth-buttons">
-                <button class="sign-in"><a href="loginpage.html" style="color: inherit; text-decoration: none;">Sign in</a></button>
-                <button class="register"><a href="registerpage.html" style="color: inherit; text-decoration: none;">Register</a></button>
+            </div>
+            
+            <!-- Auth Buttons (Always Visible) -->
+            <div class="auth-buttons" id="authButtons">
+                <button class="sign-in"><a href="Login-Page.html"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
+                <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
+            </div>
+            
+            <!-- Hamburger Menu (Mobile) -->
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
             </div>
         </nav>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Medical Checks</h1>
-            <p>Check you health condition regularly to minimize the incidence of disease in the future .</p>
-            <button class="check-now">Check now</button>
+            <h1>Take Control of Your Health</h1>
+            <p>Regular health checks can detect potential issues early and help prevent serious conditions. Start your wellness journey today.</p>
+            <button class="check-now">
+                <i class="fas fa-calendar-alt"></i> Book an Appointment
+            </button>
         </div>
         <div class="hero-image">
-            <img src="Image/Doctor Smiling.jpg" alt="Doctor smiling">
+            <img src="Image/Doctor Smiling.jpg" alt="Friendly doctor with patient">
         </div>
     </section>
 
     <section class="checks-grid">
-        <h2>Get yourself</h2>
-        <h3>Checked!</h3>
+        <div class="section-header">
+            <h2>Comprehensive Health Checks</h2>
+            <p class="subtitle">Our specialized tests cover all aspects of your wellbeing</p>
+        </div>
         <div class="grid-container">
             <div class="check-item">
-                <div class="icon">👁️</div>
-                <h3>Eyes</h3>
-                <p class="title">Title</p>
-                <p class="description">Description</p>
+                <div class="icon"><i class="fas fa-eye"></i></div>
+                <h3>Vision Screening</h3>
+                <p class="description">Comprehensive eye exams to detect vision problems and eye diseases</p>
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="check-item">
-                <div class="icon">👂</div>
-                <h3>Ears</h3>
-                <p class="title">Title</p>
-                <p class="description">Description</p>
+                <div class="icon"><i class="fas fa-ear"></i></div>
+                <h3>Hearing Tests</h3>
+                <p class="description">Evaluate your hearing health and detect any auditory impairments</p>
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="check-item">
-                <div class="icon">👃</div>
-                <h3>Nose</h3>
-                <p class="title">Title</p>
-                <p class="description">Description</p>
+                <div class="icon"><i class="fas fa-lungs"></i></div>
+                <h3>Respiratory Check</h3>
+                <p class="description">Assess lung function and detect respiratory conditions</p>
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="check-item">
-                <div class="icon">🫁</div>
-                <h3>Lungs</h3>
-                <p class="title">Title</p>
-                <p class="description">Description</p>
+                <div class="icon"><i class="fas fa-tint"></i></div>
+                <h3>Blood Analysis</h3>
+                <p class="description">Complete blood work to monitor your overall health</p>
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="check-item">
-                <div class="icon">🩸</div>
-                <h3>Blood</h3>
-                <p class="title">Title</p>
-                <p class="description">Description</p>
+                <div class="icon"><i class="fas fa-bone"></i></div>
+                <h3>Bone Density</h3>
+                <p class="description">Screen for osteoporosis and assess bone health</p>
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="check-item">
-                <div class="icon">🦴</div>
-                <h3>Bones</h3>
-                <p class="title">Title</p>
-                <p class="description">Description</p>
+                <div class="icon"><i class="fas fa-heart"></i></div>
+                <h3>Cardiac Screening</h3>
+                <p class="description">Evaluate heart health and detect cardiovascular risks</p>
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
-        <a href="#" class="see-more">See More ...</a>
+        <a href="#" class="see-more">View All Services <i class="fas fa-chevron-right"></i></a>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-clock"></i>
+            <h3>Quick Results</h3>
+            <p>Receive most test results within 24-48 hours through our secure portal</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-user-md"></i>
+            <h3>Expert Doctors</h3>
+            <p>Board-certified physicians with specialized training in diagnostics</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Secure Data</h3>
+            <p>HIPAA-compliant systems ensure your health information stays private</p>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2023 Medical Checks</p>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MedicalChecks</span>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <a href="#">Preventive Care</a>
+                    <a href="#">Diagnostic Tests</a>
+                    <a href="#">Wellness Programs</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">News</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <a href="Contact-Us-Page.html">Contact</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Check if user is logged in (example using localStorage)
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    
+        // Get DOM elements
+        const mainNavLinks = document.getElementById('mainNavLinks');
+        const authButtons = document.getElementById('authButtons');
+    
+        if (!isLoggedIn) {
+            // Hide navigation links if not logged in
+            mainNavLinks.style.display = 'none';
+        } else {
+            // Hide auth buttons if logged in
+            authButtons.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
