@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | MedicalChecks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="Style/Appointment-Page.css">
+    <link rel="stylesheet" href="Style/Home-Page.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MedicalChecks</span>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="nav-links" id="mainNavLinks">
+                <div class="dropdown">
+                    <a href="Home-Page.html" class="dropbtn">Home</a>
+                    <div class="dropdown-content">
+                        <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Patient Portal</a>
+                    <div class="dropdown-content">
+                        <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
+                        <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                        <a href="#"><i class="fas fa-file-medical"></i> Medical Record</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Laboratory Tests</a>
+                    <div class="dropdown-content">
+                        <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                        <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                        <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Menu -->
+            <div class="user-menu" id="userMenu">
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span>John Doe</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hamburger Menu -->
+            <button class="hamburger" id="hamburgerBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </header>
+    
+    <main class="appointment-container">
+        <div class="appointment-header">
+            <h1><i class="fas fa-calendar-alt"></i> Book an Appointment</h1>
+            <p>Schedule your health check with our certified specialists</p>
+        </div>
+        
+        <div class="appointment-steps">
+            <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Service</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Date & Time</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Details</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">Confirmation</div>
+            </div>
+        </div>
+        
+        <form id="appointmentForm">
+            <!-- Step 1: Service Selection -->
+            <div class="form-step active" data-step="1">
+                <h2>Select Service</h2>
+                <p>Choose the type of health check you need</p>
+                
+                <div class="service-options">
+                    <div class="service-card">
+                        <input type="radio" name="service" id="general-checkup" value="General Checkup" required>
+                        <label for="general-checkup">
+                            <i class="fas fa-user-md"></i>
+                            <h3>General Checkup</h3>
+                            <p>Comprehensive physical examination and basic tests</p>
+                            <div class="service-price">Php 500</div>
+                        </label>
+                    </div>
+                    
+                    <div class="service-card">
+                        <input type="radio" name="service" id="blood-test" value="Blood Test">
+                        <label for="blood-test">
+                            <i class="fas fa-tint"></i>
+                            <h3>Blood Test</h3>
+                            <p>Complete blood count and chemistry panel</p>
+                            <div class="service-price">Php 300</div>
+                        </label>
+                    </div>
+                    
+                    <div class="service-card">
+                        <input type="radio" name="service" id="vision-test" value="Vision Test">
+                        <label for="vision-test">
+                            <i class="fas fa-eye"></i>
+                            <h3>Vision Test</h3>
+                            <p>Comprehensive eye examination</p>
+                            <div class="service-price">Php 400</div>
+                        </label>
+                    </div>
+                    
+                    <div class="service-card">
+                        <input type="radio" name="service" id="cardiac-screen" value="Cardiac Screening">
+                        <label for="cardiac-screen">
+                            <i class="fas fa-heart"></i>
+                            <h3>Cardiac Screening</h3>
+                            <p>ECG and cardiovascular assessment</p>
+                            <div class="service-price">Php 600</div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn-next" data-next="2">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Date & Time Selection -->
+            <div class="form-step" data-step="2">
+                <h2>Select Date & Time</h2>
+                <p>Choose a convenient time for your appointment</p>
+                
+                <div class="datetime-selection">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button type="button" class="month-nav" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="currentMonth">June 2023</h3>
+                            <button type="button" class="month-nav" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="time-selection">
+                        <h3>Available Time Slots</h3>
+                        <div class="time-slots" id="timeSlots">
+                            <!-- Time slots will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn-prev" data-prev="1"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn-next" data-next="3">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Personal Details -->
+            <div class="form-step" data-step="3">
+                <h2>Your Information</h2>
+                <p>Please provide your details for the appointment</p>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" pattern="[\+]\d{2}\s\d{3}\s\d{3}\s\d{4}" placeholder="+63 912 345 6789" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                            <option value="prefer-not-to-say">Prefer not to say</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="notes">Additional Notes (Optional)</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Any special requirements or concerns"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn-prev" data-prev="2"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn-next" data-next="4">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Confirmation -->
+            <div class="form-step" data-step="4">
+                <h2>Confirm Appointment</h2>
+                <p>Review your appointment details before submitting</p>
+                
+                <div class="confirmation-details">
+                    <div class="detail-card">
+                        <h3>Appointment Summary</h3>
+                        <div class="detail-item">
+                            <span>Service:</span>
+                            <span id="confirm-service">General Checkup</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Date:</span>
+                            <span id="confirm-date">June 15, 2023</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Time:</span>
+                            <span id="confirm-time">10:00 AM</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Duration:</span>
+                            <span id="confirm-duration">30 minutes</span>
+                        </div>
+                        <div class="detail-item total">
+                            <span>Total:</span>
+                            <span id="confirm-price">Php 500</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <h3>Your Information</h3>
+                        <div class="detail-item">
+                            <span>Name:</span>
+                            <span id="confirm-name">John Doe</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Email:</span>
+                            <span id="confirm-email">john.doe@example.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Phone:</span>
+                            <span id="confirm-phone">+63 912 345 6789</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="terms-agreement">
+                    <input type="checkbox" id="appointment-terms" required>
+                    <label for="appointment-terms">I agree to the <a href="#">Terms of Service</a> and confirm that the information provided is accurate.</label>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn-prev" data-prev="3"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button type="submit" class="btn-submit">
+                        <span class="button-text">Confirm Appointment</span>
+                        <span class="spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="Contact-Us-Page.html">Contact Us</a>
+            </div>
+            <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Check login status
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    
+    // Get elements
+    const mainNavLinks = document.getElementById('mainNavLinks');
+    const authButtons = document.getElementById('authButtons');
+    const userMenu = document.getElementById('userMenu');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuContent = document.querySelector('.mobile-menu-content');
+    
+    // Toggle login state
+    function toggleLoginState() {
+        if (isLoggedIn) {
+            mainNavLinks.style.display = "flex";
+            userMenu.style.display = "block";
+            if (authButtons) authButtons.style.display = "none";
+        } else {
+            mainNavLinks.style.display = "none";
+            userMenu.style.display = "none";
+            if (authButtons) authButtons.style.display = "flex";
+        }
+    }
+    
+    // Initialize login state
+    toggleLoginState();
+    
+    // Mobile menu functionality
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            
+            // Clone appropriate content to mobile menu
+            mobileMenuContent.innerHTML = '';
+            if (isLoggedIn) {
+                const navClone = mainNavLinks.cloneNode(true);
+                const userClone = userMenu.cloneNode(true);
+                mobileMenuContent.appendChild(navClone);
+                mobileMenuContent.appendChild(userClone);
+                
+                // Make dropdowns work in mobile
+                const mobileDropdowns = mobileMenuContent.querySelectorAll('.dropdown');
+                mobileDropdowns.forEach(dropdown => {
+                    const btn = dropdown.querySelector('.dropbtn');
+                    const content = dropdown.querySelector('.dropdown-content');
+                    
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                    });
+                });
+            } else {
+                const authClone = authButtons.cloneNode(true);
+                mobileMenuContent.appendChild(authClone);
+            }
+        });
+    }
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.navbar') && !e.target.closest('.mobile-menu')) {
+            mobileMenu.classList.remove('active');
+        }
+    });
+    
+    // Logout functionality
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if(confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('isLoggedIn');
+                window.location.href = 'Login-Page.html';
+            }
+        });
+    }
+    
+    // Better dropdown accessibility
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        dropdown.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                this.querySelector('.dropbtn').click();
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Appointment Form Functionality
+    const appointmentForm = document.getElementById('appointmentForm');
+    const formSteps = document.querySelectorAll('.form-step');
+    const stepIndicators = document.querySelectorAll('.step');
+    const nextButtons = document.querySelectorAll('.btn-next');
+    const prevButtons = document.querySelectorAll('.btn-prev');
+    
+    let currentStep = 1;
+    
+    // Initialize calendar
+    let currentDate = new Date();
+    let selectedDate = null;
+    let selectedTime = null;
+    
+    renderCalendar(currentDate);
+    
+    // Next button functionality
+    nextButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const nextStep = parseInt(this.getAttribute('data-next'));
+            
+            // Validate current step before proceeding
+            if (validateStep(currentStep)) {
+                updateStep(currentStep, nextStep);
+                currentStep = nextStep;
+            }
+        });
+    });
+    
+    // Previous button functionality
+    prevButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const prevStep = parseInt(this.getAttribute('data-prev'));
+            updateStep(currentStep, prevStep);
+            currentStep = prevStep;
+        });
+    });
+    
+    // Month navigation
+    document.getElementById('prevMonth').addEventListener('click', function() {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar(currentDate);
+    });
+    
+    document.getElementById('nextMonth').addEventListener('click', function() {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar(currentDate);
+    });
+    
+    // Form submission
+    if (appointmentForm) {
+        appointmentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = document.querySelector('.btn-submit');
+            const spinner = submitButton.querySelector('.spinner');
+            const buttonText = submitButton.querySelector('.button-text');
+            
+            submitButton.disabled = true;
+            buttonText.textContent = "Processing...";
+            spinner.classList.remove('hidden');
+            
+            // Simulate form submission
+            setTimeout(() => {
+                alert('Appointment booked successfully! A confirmation has been sent to your email.');
+                submitButton.disabled = false;
+                buttonText.textContent = "Confirm Appointment";
+                spinner.classList.add('hidden');
+                
+                // Here you would typically redirect to a confirmation page
+                // window.location.href = "Appointment-Confirmation.html";
+            }, 2000);
+        });
+    }
+    
+    // Validate step before proceeding
+    function validateStep(step) {
+        let isValid = true;
+        
+        if (step === 1) {
+            const selectedService = document.querySelector('input[name="service"]:checked');
+            if (!selectedService) {
+                alert('Please select a service');
+                isValid = false;
+            }
+        } else if (step === 2) {
+            if (!selectedDate) {
+                alert('Please select a date');
+                isValid = false;
+            } else if (!selectedTime) {
+                alert('Please select a time slot');
+                isValid = false;
+            }
+        } else if (step === 3) {
+            const requiredFields = appointmentForm.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.classList.add('error');
+                    isValid = false;
+                } else {
+                    field.classList.remove('error');
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields');
+            } else {
+                // Update confirmation details
+                updateConfirmationDetails();
+            }
+        }
+        
+        return isValid;
+    }
+    
+    // Update step visibility
+    function updateStep(current, next) {
+        // Hide current step
+        document.querySelector(`.form-step[data-step="${current}"]`).classList.remove('active');
+        document.querySelector(`.step[data-step="${current}"]`).classList.remove('active');
+        
+        // Show next step
+        document.querySelector(`.form-step[data-step="${next}"]`).classList.add('active');
+        document.querySelector(`.step[data-step="${next}"]`).classList.add('active');
+    }
+    
+    // Render calendar
+    function renderCalendar(date) {
+        const calendarGrid = document.getElementById('calendarGrid');
+        const monthYearDisplay = document.getElementById('currentMonth');
+        
+        // Clear previous calendar
+        calendarGrid.innerHTML = '';
+        
+        // Set month/year display
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                           'July', 'August', 'September', 'October', 'November', 'December'];
+        monthYearDisplay.textContent = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+        
+                // Get first day of month and total days
+                const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+        const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+        
+        // Add day headers
+        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        dayNames.forEach(day => {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day-header';
+            dayElement.textContent = day;
+            calendarGrid.appendChild(dayElement);
+        });
+        
+        // Add empty cells for days before the first day of the month
+        for (let i = 0; i < firstDay; i++) {
+            const emptyDay = document.createElement('div');
+            emptyDay.className = 'calendar-day disabled';
+            calendarGrid.appendChild(emptyDay);
+        }
+        
+        // Add days of the month
+        const today = new Date();
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            dayElement.textContent = i;
+            
+            const currentDay = new Date(date.getFullYear(), date.getMonth(), i);
+            
+            // Disable past dates
+            if (currentDay < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+                dayElement.classList.add('disabled');
+            } else {
+                // Add click event for selectable dates
+                dayElement.addEventListener('click', function() {
+                    // Remove selected class from all days
+                    document.querySelectorAll('.calendar-day').forEach(day => {
+                        day.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked day
+                    this.classList.add('selected');
+                    
+                    // Store selected date
+                    selectedDate = currentDay;
+                    
+                    // Generate time slots for selected date
+                    generateTimeSlots();
+                });
+            }
+            
+            // Highlight today
+            if (currentDay.toDateString() === today.toDateString()) {
+                dayElement.classList.add('today');
+            }
+            
+            calendarGrid.appendChild(dayElement);
+        }
+    }
+    
+    // Generate time slots
+    function generateTimeSlots() {
+        const timeSlotsContainer = document.getElementById('timeSlots');
+        timeSlotsContainer.innerHTML = '';
+        
+        if (!selectedDate) return;
+        
+        // Clear previous selected time
+        selectedTime = null;
+        
+        // Generate time slots (every 30 minutes from 8AM to 5PM)
+        const startHour = 8;
+        const endHour = 17;
+        const timeSlots = [];
+        
+        for (let hour = startHour; hour <= endHour; hour++) {
+            for (let minute = 0; minute < 60; minute += 30) {
+                const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                const displayTime = `${hour > 12 ? hour - 12 : hour}:${minute.toString().padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`;
+                
+                // Randomly mark some slots as unavailable (for demo)
+                const isAvailable = Math.random() > 0.3;
+                
+                const timeSlot = document.createElement('div');
+                timeSlot.className = `time-slot ${isAvailable ? '' : 'unavailable'}`;
+                timeSlot.textContent = displayTime;
+                
+                if (isAvailable) {
+                    timeSlot.addEventListener('click', function() {
+                        // Remove selected class from all slots
+                        document.querySelectorAll('.time-slot').forEach(slot => {
+                            slot.classList.remove('selected');
+                        });
+                        
+                        // Add selected class to clicked slot
+                        this.classList.add('selected');
+                        
+                        // Store selected time
+                        selectedTime = timeString;
+                    });
+                }
+                
+                timeSlotsContainer.appendChild(timeSlot);
+            }
+        }
+    }
+    
+    // Update confirmation details
+    function updateConfirmationDetails() {
+        // Service details
+        const service = document.querySelector('input[name="service"]:checked');
+        if (service) {
+            document.getElementById('confirm-service').textContent = service.value;
+            document.getElementById('confirm-price').textContent = 
+                service.id === 'general-checkup' ? 'Php 500' :
+                service.id === 'blood-test' ? 'Php 300' :
+                service.id === 'vision-test' ? 'Php 400' : 'Php 600';
+        }
+        
+        // Date and time
+        if (selectedDate) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('confirm-date').textContent = selectedDate.toLocaleDateString('en-US', options);
+            
+            if (selectedTime) {
+                const [hours, minutes] = selectedTime.split(':');
+                const time = new Date();
+                time.setHours(parseInt(hours));
+                time.setMinutes(parseInt(minutes));
+                
+                document.getElementById('confirm-time').textContent = 
+                    time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                
+                document.getElementById('confirm-duration').textContent = '30 minutes';
+            }
+        }
+        
+        // Personal details
+        document.getElementById('confirm-name').textContent = document.getElementById('fullName').value;
+        document.getElementById('confirm-email').textContent = document.getElementById('email').value;
+        document.getElementById('confirm-phone').textContent = document.getElementById('phone').value;
+    }
+});
+    </script>
+</body>
+</html>
