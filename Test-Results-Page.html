@@ -4,52 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Test Results </title>
+    <link rel="stylesheet" href="Style/Home-Page.css">
     <link rel="stylesheet" href="Style/Test-Results-Page.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-links">
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Home</a>
-                <div class="dropdown-content">
-                    <a href="Home-Page.html">Dashboard</a>
-                    <a href="Contact-Us-Page.html">Contact Us</a>
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MedicalChecks</span>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="nav-links" id="mainNavLinks">
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Home</a>
+                    <div class="dropdown-content">
+                        <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Patient Portal</a>
+                    <div class="dropdown-content">
+                        <a href="#"><i class="fas fa-calendar-check"></i> Appointment</a>
+                        <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                        <a href="#"><i class="fas fa-file-medical"></i> Medical Record</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Laboratory Tests</a>
+                    <div class="dropdown-content">
+                        <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                        <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                        <a href="#"><i class="fas fa-history"></i> Test History</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Menu -->
+            <div class="user-menu" id="userMenu">
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span>John Doe</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                        <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
                 </div>
             </div>
             
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Patient Portal</a>
-                <div class="dropdown-content">
-                    <a href="Profile-Page.html">Profile</a>
-                    <a href="#">Appointment</a>
-                    <a href="#">Billing</a>
-                    <a href="#">Medical Record</a>
-                </div>
+            <!-- Auth Buttons -->
+            <div class="auth-buttons" id="authButtons">
+                <button class="sign-in"><a href="Login-Page.html"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
+                <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
             </div>
             
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Laboratory Tests</a>
-                <div class="dropdown-content">
-                    <a href="Test-Results-Page.html">Test Result</a>
-                    <a href="Order-Page.html">Request Tests</a>
-                    <a href="#">Test History</a>
-                </div>
-            </div>
-            
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Settings</a>
-                <div class="dropdown-content">
-                    <a href="#">Security Setting</a>
-                </div>
-            </div>
-            
-            <span class="welcome">Welcome, User!</span>
-            <div class="hamburger">
+            <!-- Hamburger Menu -->
+            <button class="hamburger" id="hamburgerBtn">
                 <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <!-- Content will be populated by JavaScript -->
             </div>
         </div>
-    </nav>
+    </header>
 
     <div class="form-container">
 		<center>
@@ -86,8 +116,91 @@
     </div>
 
     <script>
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check login status
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            // Get elements
+            const mainNavLinks = document.getElementById('mainNavLinks');
+            const authButtons = document.getElementById('authButtons');
+            const userMenu = document.getElementById('userMenu');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuContent = document.querySelector('.mobile-menu-content');
+            
+            // Toggle login state
+            function toggleLoginState() {
+                if (isLoggedIn) {
+                    mainNavLinks.style.display = "flex";
+                    userMenu.style.display = "block";
+                    authButtons.style.display = "none";
+                } else {
+                    mainNavLinks.style.display = "none";
+                    userMenu.style.display = "none";
+                    authButtons.style.display = "flex";
+                }
+            }
+            
+            // Initialize login state
+            toggleLoginState();
+            
+            // Mobile menu functionality
+            hamburgerBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                
+                // Clone appropriate content to mobile menu
+                mobileMenuContent.innerHTML = '';
+                if (isLoggedIn) {
+                    const navClone = mainNavLinks.cloneNode(true);
+                    const userClone = userMenu.cloneNode(true);
+                    mobileMenuContent.appendChild(navClone);
+                    mobileMenuContent.appendChild(userClone);
+                    
+                    // Make dropdowns work in mobile
+                    const mobileDropdowns = mobileMenuContent.querySelectorAll('.dropdown');
+                    mobileDropdowns.forEach(dropdown => {
+                        const btn = dropdown.querySelector('.dropbtn');
+                        const content = dropdown.querySelector('.dropdown-content');
+                        
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                        });
+                    });
+                } else {
+                    const authClone = authButtons.cloneNode(true);
+                    mobileMenuContent.appendChild(authClone);
+                }
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.navbar') && !e.target.closest('.mobile-menu')) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+            
+            // Logout functionality
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if(confirm('Are you sure you want to logout?')) {
+                        localStorage.removeItem('isLoggedIn');
+                        window.location.href = 'Login-Page.html';
+                    }
+                });
+            }
+            
+            // Better dropdown accessibility
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        this.querySelector('.dropbtn').click();
+                        e.preventDefault();
+                    }
+                });
+            });
         });
     </script>
 </body>

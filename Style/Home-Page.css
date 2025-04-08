@@ -25,30 +25,30 @@ body {
     line-height: 1.6;
 }
 
-header {
-    background-color: var(--white);
-    padding: 0;
-    box-shadow: var(--shadow);
+/* Improved navbar positioning */
+.navbar {
     position: sticky;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
-}
-
-.navbar {
+    padding: 1rem 2rem;
+    background-color: var(--white);
+    box-shadow: var(--shadow);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
 }
 
 .nav-logo {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
+    gap: 10px;
+    text-decoration: none;
+    margin-right: 100px;
 }
 
 .nav-logo i {
@@ -62,11 +62,53 @@ header {
     gap: 2rem;
 }
 
+/* Mobile menu styles */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    z-index: 999;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
+.mobile-menu-content {
+    padding: 20px;
+}
+
+.mobile-menu-content .dropdown {
+    margin-bottom: 15px;
+}
+
+.mobile-menu-content .dropbtn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.mobile-menu-content .dropdown-content {
+    position: static;
+    box-shadow: none;
+    display: none;
+    padding-left: 15px;
+}
+
+.mobile-menu-content .dropdown-content a {
+    padding: 10px 0;
+}
+
 .hamburger {
     display: none;
-    cursor: pointer;
+    background: none;
+    border: none;
     font-size: 1.5rem;
     color: var(--text-color);
+    cursor: pointer;
 }
 
 .dropdown {
@@ -92,8 +134,9 @@ header {
     color: var(--primary-color);
 }
 
+/* Improved dropdown behavior */
 .dropdown-content {
-    display: none;
+    display: block;
     position: absolute;
     background-color: var(--white);
     min-width: 220px;
@@ -102,13 +145,15 @@ header {
     border-radius: 8px;
     top: 100%;
     left: 0;
+    visibility: hidden;
     opacity: 0;
     transform: translateY(10px);
-    transition: all 0.3s ease;
+    transition: visibility 0s, opacity 0.3s ease, transform 0.3s ease;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+    visibility: visible;
     opacity: 1;
     transform: translateY(0);
 }
@@ -157,6 +202,42 @@ header {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+/* User Menu Styles */
+.user-menu {
+    display: none;
+    margin-left: auto;
+    padding-left: 20px;
+}
+
+.user-menu .dropbtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.user-menu .dropbtn:hover {
+    background-color: #f5f5f5;
+}
+
+.user-menu .dropbtn i:first-child {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.user-menu .dropdown-content {
+    right: 0;
+    left: auto;
 }
 
 .sign-in {
@@ -472,7 +553,6 @@ footer {
     color: var(--primary-color);
 }
 
-
 @media (max-width: 1024px) {
     .hero {
         flex-direction: column;
@@ -496,24 +576,24 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .nav-links {
-        display: none !important; /* Force hide on mobile when logged out */
+    .navbar {
+        padding: 1rem;
     }
     
-    .auth-buttons {
-        display: none !important; /* Hide auth buttons on mobile (replace with menu) */
+    .nav-links, .auth-buttons, .user-menu {
+        display: none !important;
     }
     
     .hamburger {
         display: block;
     }
+    
+    .mobile-menu.active {
+        display: block;
+    }
 }
 
 @media (max-width: 480px) {
-    .navbar {
-        padding: 1rem;
-    }
-    
     .hero {
         padding: 40px 20px;
         margin: 20px 15px;
