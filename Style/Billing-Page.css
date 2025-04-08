@@ -96,13 +96,7 @@
     font-weight: 600;
 }
 
-.payment-actions {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.payment-actions button {
+.payment-actions a {
     padding: 15px 25px;
     border: none;
     border-radius: 8px;
@@ -112,10 +106,7 @@
     align-items: center;
     gap: 10px;
     transition: all 0.3s;
-}
-
-.payment-actions button i {
-    font-size: 1.1rem;
+    text-decoration: none;
 }
 
 .pay-now {
@@ -127,17 +118,6 @@
     background-color: var(--primary-dark);
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 198, 152, 0.2);
-}
-
-.payment-methods {
-    background-color: var(--white);
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-
-.payment-methods:hover {
-    background-color: var(--primary-color);
-    color: var(--white);
 }
 
 .billing-details {
