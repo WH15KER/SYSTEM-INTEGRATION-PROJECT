@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Check login status
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    
+ 
     // Get elements
     const mainNavLinks = document.getElementById('mainNavLinks');
     const authButtons = document.getElementById('authButtons');
