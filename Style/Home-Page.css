@@ -295,16 +295,17 @@ body {
 .check-now {
     background-color: var(--primary-color);
     color: var(--white);
-    padding: 15px 30px;
+    padding: 12px 24px; /* Reduced from 15px 30px to make it less wide */
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    display: flex;
+    display: inline-flex; /* Changed to inline-flex to respect content width */
     align-items: center;
     gap: 10px;
     transition: all 0.3s;
+    white-space: nowrap; /* Added to prevent text wrapping */
 }
 
 .check-now:hover {
