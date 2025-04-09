@@ -52,7 +52,7 @@
                 <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
             </div>
 
-            <button type="submit" class="btn-signup">
+            <button type="submit" class="btn-signup" id="signupButton" disabled>
                 <i class="fas fa-user-plus"></i> Create Account
             </button>
 
@@ -67,5 +67,17 @@
             <p class="login-link">Already have an account? <a href="Login-Page.html">Sign in</a></p>
         </form>
     </div>
+
+    <script>
+        // Get references to the checkbox and button
+        const termsCheckbox = document.getElementById('terms');
+        const signupButton = document.getElementById('signupButton');
+
+        // Add event listener to the checkbox
+        termsCheckbox.addEventListener('change', function() {
+            // Enable/disable button based on checkbox state
+            signupButton.disabled = !this.checked;
+        });
+    </script>
 </body>
 </html>
