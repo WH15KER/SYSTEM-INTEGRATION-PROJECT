@@ -8,380 +8,285 @@
     <link rel="stylesheet" href="Style/Test-History-Page.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="nav-logo">
-                <i class="fas fa-heartbeat"></i>
-                <span>MedicalChecks</span>
-            </div>
-            
-            <!-- Navigation Links -->
-            <div class="nav-links" id="mainNavLinks">
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">Home</a>
-                    <div class="dropdown-content">
-                        <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
-                        <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
-                    </div>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
                 </div>
                 
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">Patient Portal</a>
-                    <div class="dropdown-content">
-                        <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
-                        <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
-                        <a href="Medical-Record-Page.html"><i class="fas fa-file-medical"></i> Medical Record</a>
-                    </div>
-                </div>
-                
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">Laboratory Tests</a>
-                    <div class="dropdown-content">
-                        <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
-                        <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
-                        <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- User Menu -->
-            <div class="user-menu" id="userMenu">
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        <i class="fas fa-user-circle"></i>
-                        <span>John Doe</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
-                        <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
-                        <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Auth Buttons -->
-            <div class="auth-buttons" id="authButtons">
-                <button class="sign-in"><a href="Login-Page.html"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
-                <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
-            </div>
-            
-            <!-- Hamburger Menu -->
-            <button class="hamburger" id="hamburgerBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <div class="mobile-menu-content">
-                <!-- Content will be populated by JavaScript -->
-            </div>
-        </div>
-    </header>
-
-    <main class="test-history-container">
-        <section class="test-history-header">
-            <h1><i class="fas fa-history"></i> Test History</h1>
-            <p>View your complete laboratory test history and results</p>
-        </section>
-
-        <div class="test-history-content">
-            <div class="filter-controls">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search tests...">
-                    <button type="button"><i class="fas fa-search"></i></button>
-                </div>
-                <div class="filter-options">
-                    <select id="time-filter">
-                        <option value="all">All Time</option>
-                        <option value="year">Past Year</option>
-                        <option value="month">Past Month</option>
-                        <option value="week">Past Week</option>
-                    </select>
-                    <select id="test-type">
-                        <option value="all">All Test Types</option>
-                        <option value="blood">Blood Tests</option>
-                        <option value="urine">Urine Tests</option>
-                        <option value="imaging">Imaging</option>
-                        <option value="physical">Physical Exams</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="history-summary">
-                <div class="summary-card">
-                    <i class="fas fa-vial"></i>
-                    <div>
-                        <h3>Total Tests</h3>
-                        <p class="count">47</p>
-                    </div>
-                </div>
-                <div class="summary-card">
-                    <i class="fas fa-check-circle"></i>
-                    <div>
-                        <h3>Completed</h3>
-                        <p class="count">42</p>
-                    </div>
-                </div>
-                <div class="summary-card">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <h3>Pending Results</h3>
-                        <p class="count">5</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-container">
-                <div class="timeline-year">
-                    <h2>2025</h2>
-                    <div class="timeline-month">
-                        <h3>April</h3>
-                        <div class="test-item">
-                            <div class="test-date">
-                                <span class="day">15</span>
-                                <span class="month">Apr</span>
-                            </div>
-                            <div class="test-details">
-                                <h4>Complete Blood Count (CBC)</h4>
-                                <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
-                                <div class="test-meta">
-                                    <span><i class="fas fa-hospital"></i> Main Laboratory</span>
-                                    <span><i class="fas fa-user-md"></i> Dr. Smith</span>
-                                </div>
-                                <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
-                            </div>
-                        </div>
-                        <div class="test-item">
-                            <div class="test-date">
-                                <span class="day">10</span>
-                                <span class="month">Apr</span>
-                            </div>
-                            <div class="test-details">
-                                <h4>Lipid Panel</h4>
-                                <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
-                                <div class="test-meta">
-                                    <span><i class="fas fa-hospital"></i> Main Laboratory</span>
-                                    <span><i class="fas fa-user-md"></i> Dr. Johnson</span>
-                                </div>
-                                <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
-                            </div>
+                <!-- Navigation Links -->
+                <div class="nav-links" id="mainNavLinks">
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Home</a>
+                        <div class="dropdown-content">
+                            <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
                         </div>
                     </div>
-                    <div class="timeline-month">
-                        <h3>March</h3>
-                        <div class="test-item">
-                            <div class="test-date">
-                                <span class="day">22</span>
-                                <span class="month">Mar</span>
-                            </div>
-                            <div class="test-details">
-                                <h4>Thyroid Function Test</h4>
-                                <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
-                                <div class="test-meta">
-                                    <span><i class="fas fa-hospital"></i> Main Laboratory</span>
-                                    <span><i class="fas fa-user-md"></i> Dr. Williams</span>
-                                </div>
-                                <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
-                            </div>
-                        </div>
-                        <div class="test-item">
-                            <div class="test-date">
-                                <span class="day">15</span>
-                                <span class="month">Mar</span>
-                            </div>
-                            <div class="test-details">
-                                <h4>Urinalysis</h4>
-                                <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
-                                <div class="test-meta">
-                                    <span><i class="fas fa-hospital"></i> Main Laboratory</span>
-                                    <span><i class="fas fa-user-md"></i> Dr. Smith</span>
-                                </div>
-                                <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-year">
-                    <h2>2024</h2>
-                    <div class="timeline-month">
-                        <h3>December</h3>
-                        <div class="test-item">
-                            <div class="test-date">
-                                <span class="day">10</span>
-                                <span class="month">Dec</span>
-                            </div>
-                            <div class="test-details">
-                                <h4>Annual Physical Exam</h4>
-                                <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
-                                <div class="test-meta">
-                                    <span><i class="fas fa-hospital"></i> Main Laboratory</span>
-                                    <span><i class="fas fa-user-md"></i> Dr. Johnson</span>
-                                </div>
-                                <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-month">
-                        <h3>July</h3>
-                        <div class="test-item">
-                            <div class="test-date">
-                                <span class="day">5</span>
-                                <span class="month">Jul</span>
-                            </div>
-                            <div class="test-details">
-                                <h4>Liver Function Test</h4>
-                                <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
-                                <div class="test-meta">
-                                    <span><i class="fas fa-hospital"></i> Main Laboratory</span>
-                                    <span><i class="fas fa-user-md"></i> Dr. Williams</span>
-                                </div>
-                                <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <i class="fas fa-heartbeat"></i>
-                <span>MedicalChecks</span>
-            </div>
-            <div class="footer-links">
-                <div class="footer-column">
-                    <h4>Services</h4>
-                    <a href="#">Preventive Care</a>
-                    <a href="#">Diagnostic Tests</a>
-                    <a href="#">Wellness Programs</a>
-                </div>
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <a href="#">About Us</a>
-                    <a href="#">Careers</a>
-                    <a href="#">News</a>
-                </div>
-                <div class="footer-column">
-                    <h4>Support</h4>
-                    <a href="Contact-Us-Page.html">Contact</a>
-                    <a href="#">FAQs</a>
-                    <a href="#">Privacy Policy</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check login status
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            
-            // Get elements
-            const mainNavLinks = document.getElementById('mainNavLinks');
-            const authButtons = document.getElementById('authButtons');
-            const userMenu = document.getElementById('userMenu');
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuContent = document.querySelector('.mobile-menu-content');
-            
-            // Toggle login state
-            function toggleLoginState() {
-                if (isLoggedIn) {
-                    mainNavLinks.style.display = "flex";
-                    userMenu.style.display = "block";
-                    authButtons.style.display = "none";
-                } else {
-                    mainNavLinks.style.display = "none";
-                    userMenu.style.display = "none";
-                    authButtons.style.display = "flex";
-                }
-            }
-            
-            // Initialize login state
-            toggleLoginState();
-            
-            // Mobile menu functionality
-            hamburgerBtn.addEventListener('click', function() {
-                mobileMenu.classList.toggle('active');
-                
-                // Clone appropriate content to mobile menu
-                mobileMenuContent.innerHTML = '';
-                if (isLoggedIn) {
-                    const navClone = mainNavLinks.cloneNode(true);
-                    const userClone = userMenu.cloneNode(true);
-                    mobileMenuContent.appendChild(navClone);
-                    mobileMenuContent.appendChild(userClone);
                     
-                    // Make dropdowns work in mobile
-                    const mobileDropdowns = mobileMenuContent.querySelectorAll('.dropdown');
-                    mobileDropdowns.forEach(dropdown => {
-                        const btn = dropdown.querySelector('.dropbtn');
-                        const content = dropdown.querySelector('.dropdown-content');
-                        
-                        btn.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            content.style.display = content.style.display === 'block' ? 'none' : 'block';
-                        });
-                    });
-                } else {
-                    const authClone = authButtons.cloneNode(true);
-                    mobileMenuContent.appendChild(authClone);
-                }
-            });
-            
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.navbar') && !e.target.closest('.mobile-menu')) {
-                    mobileMenu.classList.remove('active');
-                }
-            });
-            
-            // Logout functionality
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if(confirm('Are you sure you want to logout?')) {
-                        localStorage.removeItem('isLoggedIn');
-                        window.location.href = 'Login-Page.html';
-                    }
-                });
-            }
-            
-            // Filter functionality
-            const timeFilter = document.getElementById('time-filter');
-            const testTypeFilter = document.getElementById('test-type');
-            
-            timeFilter.addEventListener('change', filterTests);
-            testTypeFilter.addEventListener('change', filterTests);
-            
-            function filterTests() {
-                // This would be implemented with actual filtering logic
-                console.log('Filtering by:', timeFilter.value, testTypeFilter.value);
-            }
-            
-            // View results button functionality
-            document.querySelectorAll('.view-results').forEach(button => {
-                button.addEventListener('click', function() {
-                    // In a real app, this would open the test results
-                    alert('Opening test results...');
-                });
-            });
-        });
-    </script>
-</body>
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Patient Portal</a>
+                        <div class="dropdown-content">
+                            <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
+                            <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                            <a href="Medical-Record-Page.html"><i class="fas fa-file-medical"></i> Medical Record</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Laboratory Tests</a>
+                        <div class="dropdown-content">
+                            <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                            <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                            <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <i class="fas fa-user-circle"></i>
+                            <span>John Doe</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="auth-buttons" id="authButtons">
+                    <button class="sign-in"><a href="Login-Page.html"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
+                    <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <button class="hamburger" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </header>
+
+        <main class="test-history-container">
+            <section class="test-history-header">
+                <h1><i class="fas fa-history"></i> Test History</h1>
+                <p>View your complete laboratory test history and results</p>
+            </section>
+
+            <div class="test-history-content">
+                <div class="filter-controls">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search tests...">
+                        <button type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-options">
+                        <select id="time-filter">
+                            <option value="all">All Time</option>
+                            <option value="year">Past Year</option>
+                            <option value="month">Past Month</option>
+                            <option value="week">Past Week</option>
+                        </select>
+                        <select id="test-type">
+                            <option value="all">All Test Types</option>
+                            <option value="blood">Blood Tests</option>
+                            <option value="urine">Urine Tests</option>
+                            <option value="imaging">Imaging</option>
+                            <option value="physical">Physical Exams</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="history-summary">
+                    <div class="summary-card">
+                        <i class="fas fa-vial"></i>
+                        <div>
+                            <h3>Total Tests</h3>
+                            <p class="count">47</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h3>Completed</h3>
+                            <p class="count">42</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Pending Results</h3>
+                            <p class="count">5</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container">
+                    <div class="timeline-year">
+                        <h2>2025</h2>
+                        <div class="timeline-month">
+                            <h3>April</h3>
+                            <div class="test-item">
+                                <div class="test-date">
+                                    <span class="day">15</span>
+                                    <span class="month">Apr</span>
+                                </div>
+                                <div class="test-details">
+                                    <h4>Complete Blood Count (CBC)</h4>
+                                    <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
+                                    <div class="test-meta">
+                                        <span><i class="fas fa-hospital"></i> Main Laboratory</span>
+                                        <span><i class="fas fa-user-md"></i> Dr. Smith</span>
+                                    </div>
+                                    <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
+                                </div>
+                            </div>
+                            <div class="test-item">
+                                <div class="test-date">
+                                    <span class="day">10</span>
+                                    <span class="month">Apr</span>
+                                </div>
+                                <div class="test-details">
+                                    <h4>Lipid Panel</h4>
+                                    <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
+                                    <div class="test-meta">
+                                        <span><i class="fas fa-hospital"></i> Main Laboratory</span>
+                                        <span><i class="fas fa-user-md"></i> Dr. Johnson</span>
+                                    </div>
+                                    <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-month">
+                            <h3>March</h3>
+                            <div class="test-item">
+                                <div class="test-date">
+                                    <span class="day">22</span>
+                                    <span class="month">Mar</span>
+                                </div>
+                                <div class="test-details">
+                                    <h4>Thyroid Function Test</h4>
+                                    <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
+                                    <div class="test-meta">
+                                        <span><i class="fas fa-hospital"></i> Main Laboratory</span>
+                                        <span><i class="fas fa-user-md"></i> Dr. Williams</span>
+                                    </div>
+                                    <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
+                                </div>
+                            </div>
+                            <div class="test-item">
+                                <div class="test-date">
+                                    <span class="day">15</span>
+                                    <span class="month">Mar</span>
+                                </div>
+                                <div class="test-details">
+                                    <h4>Urinalysis</h4>
+                                    <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
+                                    <div class="test-meta">
+                                        <span><i class="fas fa-hospital"></i> Main Laboratory</span>
+                                        <span><i class="fas fa-user-md"></i> Dr. Smith</span>
+                                    </div>
+                                    <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-year">
+                        <h2>2024</h2>
+                        <div class="timeline-month">
+                            <h3>December</h3>
+                            <div class="test-item">
+                                <div class="test-date">
+                                    <span class="day">10</span>
+                                    <span class="month">Dec</span>
+                                </div>
+                                <div class="test-details">
+                                    <h4>Annual Physical Exam</h4>
+                                    <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
+                                    <div class="test-meta">
+                                        <span><i class="fas fa-hospital"></i> Main Laboratory</span>
+                                        <span><i class="fas fa-user-md"></i> Dr. Johnson</span>
+                                    </div>
+                                    <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-month">
+                            <h3>July</h3>
+                            <div class="test-item">
+                                <div class="test-date">
+                                    <span class="day">5</span>
+                                    <span class="month">Jul</span>
+                                </div>
+                                <div class="test-details">
+                                    <h4>Liver Function Test</h4>
+                                    <p class="test-status completed"><i class="fas fa-check-circle"></i> Results Available</p>
+                                    <div class="test-meta">
+                                        <span><i class="fas fa-hospital"></i> Main Laboratory</span>
+                                        <span><i class="fas fa-user-md"></i> Dr. Williams</span>
+                                    </div>
+                                    <button class="view-results"><i class="fas fa-file-alt"></i> View Results</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="#">Preventive Care</a>
+                        <a href="#">Diagnostic Tests</a>
+                        <a href="#">Wellness Programs</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#">About Us</a>
+                        <a href="#">Careers</a>
+                        <a href="#">News</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="Contact-Us-Page.html">Contact</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="Scripts/Main.js"></script>
+        <script src="Scripts/pages/Test-History.js"></script>
+        
+    </body>
 </html>
