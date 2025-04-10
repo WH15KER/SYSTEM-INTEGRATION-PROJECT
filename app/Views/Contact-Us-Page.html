@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - MedicalChecks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../public/assets/css/Home-Page.css">
+    <link rel="stylesheet" href="../../public/assets/css/Contact-Us-Page.css">
+
+</head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="nav-links" id="mainNavLinks">
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Home</a>
+                        <div class="dropdown-content">
+                            <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Patient Portal</a>
+                        <div class="dropdown-content">
+                            <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
+                            <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                            <a href="Medical-Record-Page.html"><i class="fas fa-file-medical"></i> Medical Record</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Laboratory Tests</a>
+                        <div class="dropdown-content">
+                            <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                            <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                            <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <i class="fas fa-user-circle"></i>
+                            <span>John Doe</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="auth-buttons" id="authButtons">
+                    <button class="sign-in"><a href="Login-Page.html"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
+                    <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <button class="hamburger" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </header>
+
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-input" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" id="surname" class="form-input" placeholder="Enter your surname">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" class="form-input" placeholder="Enter your message"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+
+        <script src="../../public/assets/js/Main.js"></script>
+        <script src="../../public/assets/js/Contact-Us.js"></script>
+    </body>
+</html>

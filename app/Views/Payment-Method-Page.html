@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Results Payment | MedicalChecks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../public/assets/css/Payment-Method-Page.css">
+    
+</head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
+                </div>
+                <div class="back-to-results">
+                    <a href="Billing-Page.html"><i class="fas fa-arrow-left"></i> Back to Results</a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container">
+            <div class="left-panel">
+                <div class="payment-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Test Type:</span>
+                        <span>Standard Test</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Price:</span>
+                        <span>Php 50.00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total:</span>
+                        <span>Php 50.00</span>
+                    </div>
+                    <div class="secure-payment">
+                        <i class="fas fa-lock"></i>
+                        <span>Secure Payment</span>
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="payment-header">
+                    <h2>Payment Method</h2>
+                    <p>Complete your payment to access your lab results</p>
+                </div>
+                
+                <div class="payment-methods">
+                    <button class="payment-method active" data-method="credit-card">
+                        <i class="fas fa-credit-card"></i> 
+                        <span>Credit/Debit Card</span>
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                    <button class="payment-method" data-method="gcash">
+                        <i class="fas fa-mobile-alt"></i> 
+                        <span>GCash</span>
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </div>
+                
+                <form id="paymentForm">
+                    <div class="credit-card-info">
+                        <div class="form-header">
+                            <h3>Card Information</h3>
+                            <div class="card-icons">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="name">Cardholder Name</label>
+                            <input type="text" id="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <div class="input-with-icon">
+                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" pattern="\d{16}" title="16-digit card number" required>
+                                <i class="far fa-credit-card"></i>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="valid-until">Expiry Date</label>
+                                <input type="month" id="valid-until" placeholder="MM/YY" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <div class="input-with-icon">
+                                    <input type="text" id="cvv" placeholder="123" pattern="\d{3}" title="3-digit CVV" required>
+                                    <i class="fas fa-question-circle" title="3-digit code on back of card"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="billing-info">
+                        <h3>Billing Information</h3>
+                        <div class="form-group">
+                            <label for="address">Billing Address</label>
+                            <textarea id="address" placeholder="Street, Province, City, Country" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Contact Number</label>
+                            <input type="tel" id="contact" placeholder="+63 912 345 6789" pattern="[\+]\d{2}\s\d{3}\s\d{3}\s\d{4}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="terms-agreement">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+                    
+                    <button class="pay-button" id="payButton">
+                        <span class="button-text">Pay Php 50.00</span>
+                        <span class="spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="Contact-Us-Page.html">Contact Us</a>
+                </div>
+                <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script src="../../public/assets/js/Main.js"></script>
+        <script src="../../public/assets/js/Payment-Method.js"></script>
+        
+    </body>
+</html>

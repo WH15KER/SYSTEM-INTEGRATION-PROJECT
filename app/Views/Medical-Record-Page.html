@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records | MedicalChecks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../public/assets/css/Home-Page.css">
+    <link rel="stylesheet" href="../../public/assets/css/Medical-Record-Page.css">
+</head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="nav-links" id="mainNavLinks">
+                    <div class="dropdown">
+                        <a href="Home-Page.html" class="dropbtn">Home</a>
+                        <div class="dropdown-content">
+                            <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Patient Portal</a>
+                        <div class="dropdown-content">
+                            <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
+                            <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                            <a href="Medical-Record-Page.html" class="active"><i class="fas fa-file-medical"></i> Medical Record</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Laboratory Tests</a>
+                        <div class="dropdown-content">
+                            <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                            <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                            <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <i class="fas fa-user-circle"></i>
+                            <span>John Doe</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <button class="hamburger" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </header>
+        
+        <main class="medical-record-container">
+            <div class="record-header">
+                <h1><i class="fas fa-file-medical"></i> Medical Records</h1>
+                <p>View and manage your complete medical history</p>
+                
+                <div class="record-actions">
+                    <button class="btn btn-primary" id="downloadAllBtn">
+                        <i class="fas fa-download"></i> Download All Records
+                    </button>
+                    <button class="btn btn-secondary" id="shareRecordsBtn">
+                        <i class="fas fa-share-alt"></i> Share Records
+                    </button>
+                </div>
+            </div>
+            
+            <div class="record-tabs">
+                <button class="tab-btn active" data-tab="summary">Summary</button>
+                <button class="tab-btn" data-tab="visits">Visits</button>
+                <button class="tab-btn" data-tab="medications">Medications</button>
+                <button class="tab-btn" data-tab="allergies">Allergies</button>
+                <button class="tab-btn" data-tab="immunizations">Immunizations</button>
+            </div>
+            
+            <div class="record-content">
+                <!-- Summary Tab -->
+                <div class="tab-content active" id="summary-tab">
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <div class="card-header">
+                                <i class="fas fa-user"></i>
+                                <h3>Personal Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-item">
+                                    <span>Name:</span>
+                                    <span>John Doe</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Date of Birth:</span>
+                                    <span>January 15, 1985</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Gender:</span>
+                                    <span>Male</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Blood Type:</span>
+                                    <span>O+</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-card">
+                            <div class="card-header">
+                                <i class="fas fa-heartbeat"></i>
+                                <h3>Health Summary</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-item">
+                                    <span>Last Visit:</span>
+                                    <span>June 10, 2023</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Primary Physician:</span>
+                                    <span>Dr. Maria Santos</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Chronic Conditions:</span>
+                                    <span>Hypertension</span>
+                                </div>
+                                <div class="info-item">
+                                    <span>Last Lab Results:</span>
+                                    <span>Normal</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-card">
+                            <div class="card-header">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h3>Alerts</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert-item warning">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>Blood pressure slightly elevated in last visit</span>
+                                </div>
+                                <div class="alert-item info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Annual physical exam due in 2 months</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visits Tab -->
+                <div class="tab-content" id="visits-tab">
+                    <div class="visits-filter">
+                        <div class="filter-group">
+                            <label for="visit-type">Visit Type:</label>
+                            <select id="visit-type">
+                                <option value="all">All Visits</option>
+                                <option value="checkup">Regular Checkup</option>
+                                <option value="emergency">Emergency</option>
+                                <option value="specialist">Specialist Consultation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="time-range">Time Range:</label>
+                            <select id="time-range">
+                                <option value="all">All Time</option>
+                                <option value="year">Last Year</option>
+                                <option value="6months">Last 6 Months</option>
+                                <option value="month">Last Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="visits-list">
+                        <div class="visit-card">
+                            <div class="visit-header">
+                                <h3>Annual Physical Exam</h3>
+                                <span class="visit-date">June 10, 2023</span>
+                                <span class="visit-type checkup">Checkup</span>
+                            </div>
+                            <div class="visit-body">
+                                <div class="visit-details">
+                                    <div class="detail-item">
+                                        <span>Physician:</span>
+                                        <span>Dr. Maria Santos</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Diagnosis:</span>
+                                        <span>Healthy, blood pressure slightly elevated</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Notes:</span>
+                                        <span>Recommended to reduce sodium intake and exercise regularly. Follow-up in 3 months.</span>
+                                    </div>
+                                </div>
+                                <div class="visit-actions">
+                                    <button class="btn btn-sm btn-outline">
+                                        <i class="fas fa-file-pdf"></i> Download Report
+                                    </button>
+                                    <button class="btn btn-sm btn-outline">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="visit-card">
+                            <div class="visit-header">
+                                <h3>Cardiology Consultation</h3>
+                                <span class="visit-date">March 15, 2023</span>
+                                <span class="visit-type specialist">Specialist</span>
+                            </div>
+                            <div class="visit-body">
+                                <div class="visit-details">
+                                    <div class="detail-item">
+                                        <span>Physician:</span>
+                                        <span>Dr. Robert Lim</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Diagnosis:</span>
+                                        <span>Mild hypertension</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Notes:</span>
+                                        <span>ECG results normal. Prescribed medication and lifestyle changes.</span>
+                                    </div>
+                                </div>
+                                <div class="visit-actions">
+                                    <button class="btn btn-sm btn-outline">
+                                        <i class="fas fa-file-pdf"></i> Download Report
+                                    </button>
+                                    <button class="btn btn-sm btn-outline">
+                                        <i class="fas fa-share"></i> Share
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medications Tab -->
+                <div class="tab-content" id="medications-tab">
+                    <div class="medications-header">
+                        <h3>Current Medications</h3>
+                        <button class="btn btn-sm btn-primary" id="addMedicationBtn">
+                            <i class="fas fa-plus"></i> Add Medication
+                        </button>
+                    </div>
+                    
+                    <div class="medications-list">
+                        <div class="medication-card">
+                            <div class="medication-info">
+                                <h4>Lisinopril</h4>
+                                <div class="medication-details">
+                                    <span>10mg tablet</span>
+                                    <span>Once daily</span>
+                                    <span>Prescribed by Dr. Maria Santos</span>
+                                </div>
+                            </div>
+                            <div class="medication-actions">
+                                <button class="btn btn-icon" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-icon" title="History">
+                                    <i class="fas fa-history"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="medication-card">
+                            <div class="medication-info">
+                                <h4>Atorvastatin</h4>
+                                <div class="medication-details">
+                                    <span>20mg tablet</span>
+                                    <span>Once daily at bedtime</span>
+                                    <span>Prescribed by Dr. Robert Lim</span>
+                                </div>
+                            </div>
+                            <div class="medication-actions">
+                                <button class="btn btn-icon" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-icon" title="History">
+                                    <i class="fas fa-history"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="medications-history">
+                        <h3>Medication History</h3>
+                        <div class="history-table">
+                            <div class="table-header">
+                                <div>Medication</div>
+                                <div>Dosage</div>
+                                <div>Period</div>
+                                <div>Status</div>
+                            </div>
+                            <div class="table-row">
+                                <div>Metformin</div>
+                                <div>500mg twice daily</div>
+                                <div>Jan 2020 - Dec 2022</div>
+                                <div><span class="badge inactive">Discontinued</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Allergies Tab -->
+                <div class="tab-content" id="allergies-tab">
+                    <div class="allergies-header">
+                        <h3>Allergies & Reactions</h3>
+                        <button class="btn btn-sm btn-primary" id="addAllergyBtn">
+                            <i class="fas fa-plus"></i> Add Allergy
+                        </button>
+                    </div>
+                    
+                    <div class="allergies-list">
+                        <div class="allergy-card severe">
+                            <div class="allergy-info">
+                                <h4>Penicillin</h4>
+                                <div class="allergy-details">
+                                    <span>Severe allergic reaction</span>
+                                    <span>First observed: 2005</span>
+                                </div>
+                            </div>
+                            <div class="allergy-reaction">
+                                <strong>Reaction:</strong> Anaphylaxis, difficulty breathing
+                            </div>
+                        </div>
+                        
+                        <div class="allergy-card moderate">
+                            <div class="allergy-info">
+                                <h4>Sulfa Drugs</h4>
+                                <div class="allergy-details">
+                                    <span>Moderate reaction</span>
+                                    <span>First observed: 2010</span>
+                                </div>
+                            </div>
+                            <div class="allergy-reaction">
+                                <strong>Reaction:</strong> Skin rash, itching
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Immunizations Tab -->
+                <div class="tab-content" id="immunizations-tab">
+                    <div class="immunizations-header">
+                        <h3>Vaccination Records</h3>
+                        <button class="btn btn-sm btn-primary" id="addImmunizationBtn">
+                            <i class="fas fa-plus"></i> Add Immunization
+                        </button>
+                    </div>
+                    
+                    <div class="immunizations-list">
+                        <div class="immunization-card">
+                            <div class="immunization-info">
+                                <h4>Influenza Vaccine</h4>
+                                <div class="immunization-details">
+                                    <span>Date: October 15, 2022</span>
+                                    <span>Administered by: MedicalChecks Clinic</span>
+                                </div>
+                            </div>
+                            <div class="immunization-actions">
+                                <button class="btn btn-sm btn-outline">
+                                    <i class="fas fa-file-pdf"></i> Download Record
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="immunization-card">
+                            <div class="immunization-info">
+                                <h4>COVID-19 Vaccine</h4>
+                                <div class="immunization-details">
+                                    <span>Date: March 5, 2021 (Dose 1), April 2, 2021 (Dose 2)</span>
+                                    <span>Administered by: City Health Center</span>
+                                </div>
+                            </div>
+                            <div class="immunization-actions">
+                                <button class="btn btn-sm btn-outline">
+                                    <i class="fas fa-file-pdf"></i> Download Record
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="Contact-Us-Page.html">Contact Us</a>
+                </div>
+                <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script src="../../public/assets/js/Main.js"></script>
+        <script src="../../public/assets/js/Medical-Record.js"></script>
+        
+    </body>
+</html>

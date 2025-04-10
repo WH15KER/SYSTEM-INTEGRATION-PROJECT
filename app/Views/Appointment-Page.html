@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | MedicalChecks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../public/assets/css/Home-Page.css">
+    <link rel="stylesheet" href="../../public/assets/css/Appointment-Page.css">
+</head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="nav-links" id="mainNavLinks">
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Home</a>
+                        <div class="dropdown-content">
+                            <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Patient Portal</a>
+                        <div class="dropdown-content">
+                            <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
+                            <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                            <a href="Medical-Record-Page.html"><i class="fas fa-file-medical"></i> Medical Record</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Laboratory Tests</a>
+                        <div class="dropdown-content">
+                            <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                            <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                            <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <i class="fas fa-user-circle"></i>
+                            <span>John Doe</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <button class="hamburger" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </header>
+        
+        <main class="appointment-container">
+            <div class="appointment-header">
+                <h1><i class="fas fa-calendar-alt"></i> Book an Appointment</h1>
+                <p>Schedule your health check with our certified specialists</p>
+            </div>
+            
+            <div class="appointment-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Service</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Date & Time</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Details</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Confirmation</div>
+                </div>
+            </div>
+            
+            <form id="appointmentForm">
+                <!-- Step 1: Service Selection -->
+                <div class="form-step active" data-step="1">
+                    <h2>Select Service</h2>
+                    <p>Choose the type of health check you need</p>
+                    
+                    <div class="service-options">
+                        <div class="service-card">
+                            <input type="radio" name="service" id="general-checkup" value="General Checkup" required>
+                            <label for="general-checkup">
+                                <i class="fas fa-user-md"></i>
+                                <h3>General Checkup</h3>
+                                <p>Comprehensive physical examination and basic tests</p>
+                                <div class="service-price">Php 500</div>
+                            </label>
+                        </div>
+                        
+                        <div class="service-card">
+                            <input type="radio" name="service" id="blood-test" value="Blood Test">
+                            <label for="blood-test">
+                                <i class="fas fa-tint"></i>
+                                <h3>Blood Test</h3>
+                                <p>Complete blood count and chemistry panel</p>
+                                <div class="service-price">Php 300</div>
+                            </label>
+                        </div>
+                        
+                        <div class="service-card">
+                            <input type="radio" name="service" id="vision-test" value="Vision Test">
+                            <label for="vision-test">
+                                <i class="fas fa-eye"></i>
+                                <h3>Vision Test</h3>
+                                <p>Comprehensive eye examination</p>
+                                <div class="service-price">Php 400</div>
+                            </label>
+                        </div>
+                        
+                        <div class="service-card">
+                            <input type="radio" name="service" id="cardiac-screen" value="Cardiac Screening">
+                            <label for="cardiac-screen">
+                                <i class="fas fa-heart"></i>
+                                <h3>Cardiac Screening</h3>
+                                <p>ECG and cardiovascular assessment</p>
+                                <div class="service-price">Php 600</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn-next" data-next="2">Next <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Date & Time Selection -->
+                <div class="form-step" data-step="2">
+                    <h2>Select Date & Time</h2>
+                    <p>Choose a convenient time for your appointment</p>
+                    
+                    <div class="datetime-selection">
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button type="button" class="month-nav" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                <h3 id="currentMonth">June 2023</h3>
+                                <button type="button" class="month-nav" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                                <!-- Calendar will be generated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="time-selection">
+                            <h3>Available Time Slots</h3>
+                            <div class="time-slots" id="timeSlots">
+                                <!-- Time slots will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn-prev" data-prev="1"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-next" data-next="3">Next <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Personal Details -->
+                <div class="form-step" data-step="3">
+                    <h2>Your Information</h2>
+                    <p>Please provide your details for the appointment</p>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" pattern="[\+]\d{2}\s\d{3}\s\d{3}\s\d{4}" placeholder="+63 912 345 6789" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" name="dob" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="" disabled selected>Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="notes">Additional Notes (Optional)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Any special requirements or concerns"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn-prev" data-prev="2"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-next" data-next="4">Next <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Confirmation -->
+                <div class="form-step" data-step="4">
+                    <h2>Confirm Appointment</h2>
+                    <p>Review your appointment details before submitting</p>
+                    
+                    <div class="confirmation-details">
+                        <div class="detail-card">
+                            <h3>Appointment Summary</h3>
+                            <div class="detail-item">
+                                <span>Service:</span>
+                                <span id="confirm-service">General Checkup</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Date:</span>
+                                <span id="confirm-date">June 15, 2023</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Time:</span>
+                                <span id="confirm-time">10:00 AM</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Duration:</span>
+                                <span id="confirm-duration">30 minutes</span>
+                            </div>
+                            <div class="detail-item total">
+                                <span>Total:</span>
+                                <span id="confirm-price">Php 500</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <h3>Your Information</h3>
+                            <div class="detail-item">
+                                <span>Name:</span>
+                                <span id="confirm-name">John Doe</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Email:</span>
+                                <span id="confirm-email">john.doe@example.com</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Phone:</span>
+                                <span id="confirm-phone">+63 912 345 6789</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="terms-agreement">
+                        <input type="checkbox" id="appointment-terms" required>
+                        <label for="appointment-terms">I agree to the <a href="#">Terms of Service</a> and confirm that the information provided is accurate.</label>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn-prev" data-prev="3"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn-submit">
+                            <span class="button-text">Confirm Appointment</span>
+                            <span class="spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="Contact-Us-Page.html">Contact Us</a>
+                </div>
+                <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script src="../../public/assets/js/Main.js"></script>
+        <script src="../../public/assets/js/Appointment.js"></script>
+        
+    </body>
+</html>

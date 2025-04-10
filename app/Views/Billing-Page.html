@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing | MedicalChecks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../public/assets/css/Home-Page.css">
+    <link rel="stylesheet" href="../../public/assets/css/Billing-Page.css">
+
+</head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="nav-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="nav-links" id="mainNavLinks">
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Home</a>
+                        <div class="dropdown-content">
+                            <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Patient Portal</a>
+                        <div class="dropdown-content">
+                            <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
+                            <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                            <a href="Medical-Record-Page.html"><i class="fas fa-file-medical"></i> Medical Record</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Laboratory Tests</a>
+                        <div class="dropdown-content">
+                            <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
+                            <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                            <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <i class="fas fa-user-circle"></i>
+                            <span>John Doe</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="auth-buttons" id="authButtons">
+                    <button class="sign-in"><a href="Login-Page.html"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
+                    <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <button class="hamburger" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </header>
+
+        <main class="billing-container">
+            <section class="billing-header">
+                <h1><i class="fas fa-file-invoice-dollar"></i> Billing & Payments</h1>
+                <p>View and manage your medical bills and payments in one place</p>
+            </section>
+
+            <div class="billing-content">
+                <section class="billing-summary">
+                    <div class="summary-card">
+                        <div class="summary-item">
+                            <i class="fas fa-file-invoice"></i>
+                            <div>
+                                <h3>Total Balance</h3>
+                                <p class="amount">$1,245.00</p>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <div>
+                                <h3>Due Date</h3>
+                                <p class="date">May 15, 2025</p>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <i class="fas fa-wallet"></i>
+                            <div>
+                                <h3>Payment Method</h3>
+                                <p class="method">Visa •••• 4567</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-actions">
+                        <a href="Payment-Method-Page.html" class="pay-now">
+                            <i class="fas fa-credit-card"></i> Pay Now
+                        </a>
+                    </div>
+
+                </section>
+
+                <section class="billing-details">
+                    <div class="tabs">
+                        <button class="tab active" data-tab="invoices">Invoices</button>
+                        <button class="tab" data-tab="payments">Payments</button>
+                        <button class="tab" data-tab="estimates">Estimates</button>
+                    </div>
+
+                    <div class="tab-content active" id="invoices">
+                        <div class="invoice-card">
+                            <div class="invoice-header">
+                                <h3>Invoice #MC-2025-0456</h3>
+                                <span class="status paid">Paid</span>
+                            </div>
+                            <div class="invoice-details">
+                                <div>
+                                    <p class="label">Service Date</p>
+                                    <p class="value">Apr 2, 2025</p>
+                                </div>
+                                <div>
+                                    <p class="label">Amount</p>
+                                    <p class="value">$350.00</p>
+                                </div>
+                                <div>
+                                    <p class="label">Paid On</p>
+                                    <p class="value">Apr 5, 2025</p>
+                                </div>
+                            </div>
+                            <button class="view-invoice">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+
+                        <div class="invoice-card">
+                            <div class="invoice-header">
+                                <h3>Invoice #MC-2025-0489</h3>
+                                <span class="status pending">Pending</span>
+                            </div>
+                            <div class="invoice-details">
+                                <div>
+                                    <p class="label">Service Date</p>
+                                    <p class="value">Apr 15, 2025</p>
+                                </div>
+                                <div>
+                                    <p class="label">Amount</p>
+                                    <p class="value">$895.00</p>
+                                </div>
+                                <div>
+                                    <p class="label">Due Date</p>
+                                    <p class="value">May 15, 2025</p>
+                                </div>
+                            </div>
+                            <button class="pay-invoice">
+                                <i class="fas fa-credit-card"></i> Pay Now
+                            </button>
+                        </div>
+
+                        <div class="invoice-card">
+                            <div class="invoice-header">
+                                <h3>Invoice #MC-2025-0321</h3>
+                                <span class="status paid">Paid</span>
+                            </div>
+                            <div class="invoice-details">
+                                <div>
+                                    <p class="label">Service Date</p>
+                                    <p class="value">Mar 10, 2025</p>
+                                </div>
+                                <div>
+                                    <p class="label">Amount</p>
+                                    <p class="value">$275.00</p>
+                                </div>
+                                <div>
+                                    <p class="label">Paid On</p>
+                                    <p class="value">Mar 12, 2025</p>
+                                </div>
+                            </div>
+                            <button class="view-invoice">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="payments">
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <h3>Payment #PMT-2025-0123</h3>
+                                <span class="amount">$350.00</span>
+                            </div>
+                            <div class="payment-details">
+                                <div>
+                                    <p class="label">Date</p>
+                                    <p class="value">Apr 5, 2025</p>
+                                </div>
+                                <div>
+                                    <p class="label">Method</p>
+                                    <p class="value">Visa •••• 4567</p>
+                                </div>
+                                <div>
+                                    <p class="label">Invoice</p>
+                                    <p class="value">#MC-2025-0456</p>
+                                </div>
+                            </div>
+                            <button class="view-receipt">
+                                <i class="fas fa-receipt"></i> View Receipt
+                            </button>
+                        </div>
+
+                        <div class="payment-card">
+                            <div class="payment-header">
+                                <h3>Payment #PMT-2025-0089</h3>
+                                <span class="amount">$275.00</span>
+                            </div>
+                            <div class="payment-details">
+                                <div>
+                                    <p class="label">Date</p>
+                                    <p class="value">Mar 12, 2025</p>
+                                </div>
+                                <div>
+                                    <p class="label">Method</p>
+                                    <p class="value">Mastercard •••• 3210</p>
+                                </div>
+                                <div>
+                                    <p class="label">Invoice</p>
+                                    <p class="value">#MC-2025-0321</p>
+                                </div>
+                            </div>
+                            <button class="view-receipt">
+                                <i class="fas fa-receipt"></i> View Receipt
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="estimates">
+                        <div class="estimate-card">
+                            <div class="estimate-header">
+                                <h3>Estimate #EST-2025-0078</h3>
+                                <span class="amount">$1,150.00</span>
+                            </div>
+                            <div class="estimate-details">
+                                <div>
+                                    <p class="label">Service</p>
+                                    <p class="value">Annual Comprehensive Checkup</p>
+                                </div>
+                                <div>
+                                    <p class="label">Date</p>
+                                    <p class="value">Scheduled for Jun 10, 2025</p>
+                                </div>
+                            </div>
+                            <div class="estimate-actions">
+                                <button class="view-details">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                <button class="schedule">
+                                    <i class="fas fa-calendar-alt"></i> Schedule
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="billing-help">
+                    <div class="help-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Need Help with Billing?</h3>
+                        <p>Our billing specialists are available to answer your questions and help you understand your charges.</p>
+                        <button class="contact-support">
+                            <i class="fas fa-headset"></i> Contact Support
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedicalChecks</span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="#">Preventive Care</a>
+                        <a href="#">Diagnostic Tests</a>
+                        <a href="#">Wellness Programs</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#">About Us</a>
+                        <a href="#">Careers</a>
+                        <a href="#">News</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="Contact-Us-Page.html">Contact</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="../../public/assets/js/Main.js"></script>
+        <script src="../../public/assets/js/Billing.js"></script>
+        
+    </body>
+</html>
