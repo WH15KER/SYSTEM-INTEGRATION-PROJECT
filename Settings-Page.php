@@ -1,3 +1,11 @@
+<?php
+session_start();
+include("connection.php");
+include("function.php");
+
+$user_data = check_login($con);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,58 +17,64 @@
     <link rel="stylesheet" href="Style/Home-Page.css">
 </head>
     <body>
-        <header>
+    <header>
             <nav class="navbar">
                 <div class="nav-logo">
                     <i class="fas fa-heartbeat"></i>
                     <span>MedicalChecks</span>
                 </div>
-                
-                <!-- Navigation Links -->
-                <div class="nav-links" id="mainNavLinks">
+
+                <!-- Navigation Links (visible only when logged in) -->
+                <div class="nav-links" id="mainNavLinks" style="display: <?= isset($user_data) ? 'flex' : 'none' ?>;">
                     <div class="dropdown">
-                        <a href="Home-Page.html" class="dropbtn">Home</a>
+                        <a href="#" class="dropbtn">Home</a>
                         <div class="dropdown-content">
-                            <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
-                            <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                            <a href="Home-Page.php"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="Contact-Us-Page.php"><i class="fas fa-envelope"></i> Contact Us</a>
                         </div>
                     </div>
-                    
+
                     <div class="dropdown">
                         <a href="#" class="dropbtn">Patient Portal</a>
                         <div class="dropdown-content">
-                            <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
-                            <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
-                            <a href="Medical-Record-Page.html"><i class="fas fa-file-medical"></i> Medical Record</a>
+                            <a href="Appointment-Page.php"><i class="fas fa-calendar-check"></i> Appointment</a>
+                            <a href="Billing-Page.php"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                            <a href="Medical-Record-Page.php"><i class="fas fa-file-medical"></i> Medical Record</a>
                         </div>
                     </div>
-                    
+
                     <div class="dropdown">
                         <a href="#" class="dropbtn">Laboratory Tests</a>
                         <div class="dropdown-content">
-                            <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
-                            <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
-                            <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                            <a href="Test-Results-Page.php"><i class="fas fa-flask"></i> Test Result</a>
+                            <a href="Order-Page.php"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                            <a href="Test-History-Page.php"><i class="fas fa-history"></i> Test History</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- User Menu -->
-                <div class="user-menu" id="userMenu">
+                <!-- User Menu (visible only when logged in) -->
+                <div class="user-menu" id="userMenu" style="display: <?= isset($user_data) ? 'block' : 'none' ?>;">
                     <div class="dropdown">
                         <button class="dropbtn">
                             <i class="fas fa-user-circle"></i>
-                            <span>John Doe</span>
+                            <span><?= htmlspecialchars($user_data['user_name']) ?></span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="dropdown-content">
-                            <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
-                            <a href="Settings-Page.html" class="active"><i class="fas fa-cog"></i> Settings</a>
-                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            <a href="Profile-Page.php"><i class="fas fa-user"></i> Profile</a>
+                            <a href="Settings-Page.php"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="logout.php" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- Auth Buttons (visible only when logged out) -->
+                <div class="auth-buttons" id="authButtons" style="display: <?= isset($user_data) ? 'none' : 'flex' ?>;">
+                    <button class="sign-in"><a href="Login-Page.php"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
+                    <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
+                </div>
+
                 <!-- Hamburger Menu -->
                 <button class="hamburger" id="hamburgerBtn">
                     <i class="fas fa-bars"></i>
@@ -70,7 +84,7 @@
             <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">
                 <div class="mobile-menu-content">
-                    <!-- Content will be populated by JavaScript -->
+                    <!-- Populated by JS -->
                 </div>
             </div>
         </header>

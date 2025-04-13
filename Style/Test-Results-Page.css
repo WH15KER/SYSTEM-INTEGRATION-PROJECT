@@ -213,3 +213,54 @@ h2 {
     cursor: pointer;
     border-radius: 5px;
 }
+
+/* Add these styles to your existing Test-Results-Page.css */
+
+.result-card {
+    position: relative;
+    background-color: #FDB380;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    flex: 1 0 calc(50% - 20px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.result-details {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #337983;
+}
+
+.no-results {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .result-card {
+        flex: 1 0 100%;
+    }
+}

@@ -25,7 +25,7 @@ body {
     line-height: 1.6;
 }
 
-/* Improved navbar positioning */
+/* Navbar styles */
 .navbar {
     position: sticky;
     top: 0;
@@ -61,6 +61,34 @@ body {
     align-items: center;
     gap: 2rem;
 }
+
+.nav-links .user-menu {
+    margin-left: auto;
+}
+
+.nav-links .user-menu .dropbtn {
+    padding: 8px 15px;
+    background-color: rgba(0, 198, 152, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links .user-menu .dropbtn:hover {
+    background-color: rgba(0, 198, 152, 0.2);
+}
+
+.nav-links .user-menu .dropbtn i:first-child {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.nav-links .user-menu .dropdown-content {
+    right: 0;
+    left: auto;
+}
+
 
 /* Mobile menu styles */
 .mobile-menu {
@@ -134,7 +162,7 @@ body {
     color: var(--primary-color);
 }
 
-/* Improved dropdown behavior */
+/* Dropdown styles */
 .dropdown-content {
     display: block;
     position: absolute;
@@ -179,88 +207,7 @@ body {
     padding-left: 20px;
 }
 
-.auth-buttons {
-    display: flex;
-    gap: 1rem;
-}
-
-.auth-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-}
-
-.auth-buttons button a {
-    color: inherit;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* User Menu Styles */
-.user-menu {
-    display: none;
-    margin-left: auto;
-    padding-left: 20px;
-}
-
-.user-menu .dropbtn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-color);
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: all 0.3s;
-}
-
-.user-menu .dropbtn:hover {
-    background-color: #f5f5f5;
-}
-
-.user-menu .dropbtn i:first-child {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
-.user-menu .dropdown-content {
-    right: 0;
-    left: auto;
-}
-
-.sign-in {
-    background-color: transparent;
-    color: var(--text-color);
-    border: 1px solid #ddd;
-}
-
-.sign-in:hover {
-    background-color: #f5f5f5;
-}
-
-.register {
-    background-color: var(--primary-color);
-    color: var(--white);
-}
-
-.register:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 198, 152, 0.3);
-}
-
+/* Hero section */
 .hero {
     background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
     padding: 80px 30px;
@@ -295,17 +242,18 @@ body {
 .check-now {
     background-color: var(--primary-color);
     color: var(--white);
-    padding: 12px 24px; /* Reduced from 15px 30px to make it less wide */
+    padding: 12px 24px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    display: inline-flex; /* Changed to inline-flex to respect content width */
+    display: inline-flex;
     align-items: center;
     gap: 10px;
     transition: all 0.3s;
-    white-space: nowrap; /* Added to prevent text wrapping */
+    white-space: nowrap;
+    text-decoration: none;
 }
 
 .check-now:hover {
@@ -326,6 +274,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* Checks grid section */
 .checks-grid {
     padding: 60px 30px;
     max-width: 1400px;
@@ -425,6 +374,7 @@ body {
     color: var(--white);
 }
 
+/* Features section */
 .features {
     display: flex;
     justify-content: center;
@@ -469,6 +419,7 @@ body {
     line-height: 1.6;
 }
 
+/* Footer styles */
 footer {
     background-color: var(--secondary-color);
     color: var(--white);
@@ -554,6 +505,7 @@ footer {
     color: var(--primary-color);
 }
 
+/* Responsive styles */
 @media (max-width: 1024px) {
     .hero {
         flex-direction: column;
@@ -581,8 +533,12 @@ footer {
         padding: 1rem;
     }
     
-    .nav-links, .auth-buttons, .user-menu {
-        display: none !important;
+    .nav-links {
+        display: none;
+    }
+    
+    .user-menu {
+        display: none;
     }
     
     .hamburger {

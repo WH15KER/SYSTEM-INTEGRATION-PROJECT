@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveProfileBtn = document.getElementById('saveProfileBtn');
     const cancelEditBtn = document.getElementById('cancelEditBtn');
     const saveCancelButtons = document.getElementById('saveCancelButtons');
+    const profileForm = document.getElementById('profileForm');
     
     // Fields that can be edited
     const editableFields = [
@@ -27,18 +28,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Replace with input fields
             const element = document.getElementById(field);
             if (field === 'gender') {
+                const currentGender = element.textContent.trim();
                 element.innerHTML = `
-                    <select>
-                        <option value="Male" ${element.textContent === 'Male' ? 'selected' : ''}>Male</option>
-                        <option value="Female" ${element.textContent === 'Female' ? 'selected' : ''}>Female</option>
-                        <option value="Other" ${element.textContent === 'Other' ? 'selected' : ''}>Other</option>
-                        <option value="Prefer not to say" ${element.textContent === 'Prefer not to say' ? 'selected' : ''}>Prefer not to say</option>
+                    <select name="gender">
+                        <option value="male" ${currentGender === 'Male' ? 'selected' : ''}>Male</option>
+                        <option value="female" ${currentGender === 'Female' ? 'selected' : ''}>Female</option>
+                        <option value="other" ${currentGender === 'Other' ? 'selected' : ''}>Other</option>
+                        <option value="prefer-not-to-say" ${currentGender === 'Prefer not to say' ? 'selected' : ''}>Prefer not to say</option>
                     </select>
                 `;
             } else if (field === 'dob') {
-                element.innerHTML = `<input type="date" value="${formatDateForInput(element.textContent)}">`;
+                element.innerHTML = `<input type="date" name="dob" value="${formatDateForInput(element.textContent)}">`;
             } else {
-                element.innerHTML = `<input type="text" value="${element.textContent}">`;
+                const inputName = field === 'fullName' ? 'fullName' : 
+                                 field === 'bloodType' ? 'bloodType' : 
+                                 field.toLowerCase();
+                element.innerHTML = `<input type="text" name="${inputName}" value="${element.textContent}">`;
             }
         });
     }
@@ -54,33 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const element = document.getElementById(field);
             element.textContent = originalValues[field];
         });
-    }
-    
-    // Save changes
-    function saveChanges() {
-        const updatedValues = {};
-        
-        editableFields.forEach(field => {
-            const element = document.getElementById(field);
-            if (field === 'gender') {
-                updatedValues[field] = element.querySelector('select').value;
-            } else if (field === 'dob') {
-                updatedValues[field] = formatDateForDisplay(element.querySelector('input').value);
-            } else {
-                updatedValues[field] = element.querySelector('input').value;
-            }
-        });
-        
-        // Update the display with new values
-        editableFields.forEach(field => {
-            document.getElementById(field).textContent = updatedValues[field];
-        });
-        
-        // In a real app, you would send these to your backend here
-        console.log('Updated profile:', updatedValues);
-        
-        exitEditMode();
-        alert('Profile updated successfully!');
     }
     
     // Date formatting helpers
@@ -102,22 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return '';
     }
     
-    function formatDateForDisplay(inputDate) {
-        // Convert "1985-01-15" to "January 15, 1985"
-        const date = new Date(inputDate);
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    }
-    
     // Event listeners
     if (editProfileBtn) editProfileBtn.addEventListener('click', enterEditMode);
-    if (saveProfileBtn) saveProfileBtn.addEventListener('click', saveChanges);
     if (cancelEditBtn) cancelEditBtn.addEventListener('click', exitEditMode);
     
     // Change password functionality
     const changePasswordBtn = document.getElementById('changePasswordBtn');
     if (changePasswordBtn) {
         changePasswordBtn.addEventListener('click', function() {
-            window.location.href = 'Change-Password-Page.html';
+            window.location.href = 'Change-Password-Page.php';
         });
     }
     
@@ -125,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const addContactBtn = document.getElementById('addContactBtn');
     if (addContactBtn) {
         addContactBtn.addEventListener('click', function() {
-            alert('Form to add new emergency contact would appear here.');
+            window.location.href = 'Add-Contact-Page.php';
         });
     }
     
@@ -133,21 +104,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const addInsuranceBtn = document.getElementById('addInsuranceBtn');
     if (addInsuranceBtn) {
         addInsuranceBtn.addEventListener('click', function() {
-            alert('Form to add new insurance information would appear here.');
+            window.location.href = 'Add-Insurance-Page.php';
         });
     }
     
     // Edit/delete contact buttons
     document.querySelectorAll('.edit-contact').forEach(btn => {
         btn.addEventListener('click', function() {
-            alert('Edit contact form would appear here.');
+            const contactId = this.getAttribute('data-contact-id');
+            window.location.href = `Edit-Contact-Page.php?id=${contactId}`;
         });
     });
     
     document.querySelectorAll('.delete-contact').forEach(btn => {
         btn.addEventListener('click', function() {
+            const contactId = this.getAttribute('data-contact-id');
             if (confirm('Are you sure you want to delete this emergency contact?')) {
-                this.closest('.contact-card').remove();
+                fetch(`delete_contact.php?id=${contactId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.closest('.contact-card').remove();
+                    } else {
+                        alert('Failed to delete contact: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the contact');
+                });
             }
         });
     });
@@ -155,14 +142,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Edit/delete insurance buttons
     document.querySelectorAll('.edit-insurance').forEach(btn => {
         btn.addEventListener('click', function() {
-            alert('Edit insurance form would appear here.');
+            const insuranceId = this.getAttribute('data-insurance-id');
+            window.location.href = `Edit-Insurance-Page.php?id=${insuranceId}`;
         });
     });
     
     document.querySelectorAll('.delete-insurance').forEach(btn => {
         btn.addEventListener('click', function() {
+            const insuranceId = this.getAttribute('data-insurance-id');
             if (confirm('Are you sure you want to delete this insurance information?')) {
-                this.closest('.insurance-card').remove();
+                fetch(`delete_insurance.php?id=${insuranceId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.closest('.insurance-card').remove();
+                    } else {
+                        alert('Failed to delete insurance: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the insurance');
+                });
             }
         });
     });

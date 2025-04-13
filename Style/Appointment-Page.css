@@ -560,6 +560,55 @@ footer p {
     color: rgba(255, 255, 255, 0.7);
 }
 
+/* Error and success messages */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+}
+
+.error-message p {
+    margin: 5px 0;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
+
+/* Read-only fields */
+input[readonly], 
+textarea[readonly] {
+    background-color: #f5f5f5;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+/* Today indicator in calendar */
+.calendar-day.today {
+    font-weight: bold;
+    position: relative;
+}
+
+.calendar-day.today::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
     .datetime-selection {

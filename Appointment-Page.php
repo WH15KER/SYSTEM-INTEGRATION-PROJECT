@@ -1,3 +1,91 @@
+<?php
+session_start(); // Add this line at the very beginning
+require_once 'connection.php';
+require_once 'function.php';
+
+// Check if user is logged in
+$user_data = check_login($con);
+
+// Initialize variables
+$errors = [];
+$success = false;
+
+// Process form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate and sanitize input
+    $service_id = sanitize_input($con, $_POST['service_id'] ?? '');
+    $appointment_date = sanitize_input($con, $_POST['appointment_date'] ?? '');
+    $start_time = sanitize_input($con, $_POST['start_time'] ?? '');
+    $notes = sanitize_input($con, $_POST['notes'] ?? '');
+    
+    // Validate inputs
+    if (empty($service_id)) {
+        $errors[] = "Please select a service";
+    }
+    
+    if (empty($appointment_date)) {
+        $errors[] = "Please select a date";
+    }
+    
+    if (empty($start_time)) {
+        $errors[] = "Please select a time";
+    }
+    
+    // Calculate end time (assuming 30 minutes duration for all services)
+    $end_time = date('H:i:s', strtotime($start_time) + 1800);
+    
+    // If no errors, save to database
+    if (empty($errors)) {
+        $appointment_id = uniqid('appt_', true);
+        $status = 'scheduled';
+        
+        $query = "INSERT INTO appointments (
+            appointment_id, user_id, service_id, appointment_date, 
+            start_time, end_time, status, notes, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+        
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param(
+            $stmt, 
+            "ssssssss", 
+            $appointment_id, 
+            $user_data['user_id'], 
+            $service_id, 
+            $appointment_date, 
+            $start_time, 
+            $end_time, 
+            $status, 
+            $notes
+        );
+        
+        if (mysqli_stmt_execute($stmt)) {
+            $success = true;
+            
+            // Reset form values
+            $_POST = [];
+        } else {
+            $errors[] = "Failed to book appointment. Please try again.";
+        }
+    }
+}
+
+// Fetch available services from database
+$services = [];
+$query = "SELECT * FROM services WHERE is_active = TRUE";
+$result = mysqli_query($con, $query);
+if ($result) {
+    $services = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+// Fetch existing appointments to determine available time slots
+$booked_slots = [];
+$query = "SELECT appointment_date, start_time, end_time FROM appointments 
+          WHERE status = 'scheduled' AND appointment_date >= CURDATE()";
+$result = mysqli_query($con, $query);
+if ($result) {
+    $booked_slots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,58 +97,64 @@
     <link rel="stylesheet" href="Style/Home-Page.css">
 </head>
     <body>
-        <header>
+    <header>
             <nav class="navbar">
                 <div class="nav-logo">
                     <i class="fas fa-heartbeat"></i>
                     <span>MedicalChecks</span>
                 </div>
-                
-                <!-- Navigation Links -->
-                <div class="nav-links" id="mainNavLinks">
+
+                <!-- Navigation Links (visible only when logged in) -->
+                <div class="nav-links" id="mainNavLinks" style="display: <?= isset($user_data) ? 'flex' : 'none' ?>;">
                     <div class="dropdown">
-                        <a href="Home-Page.html" class="dropbtn">Home</a>
+                        <a href="#" class="dropbtn">Home</a>
                         <div class="dropdown-content">
-                            <a href="Home-Page.html"><i class="fas fa-home"></i> Dashboard</a>
-                            <a href="Contact-Us-Page.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                            <a href="Home-Page.php"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="Contact-Us-Page.php"><i class="fas fa-envelope"></i> Contact Us</a>
                         </div>
                     </div>
-                    
+
                     <div class="dropdown">
                         <a href="#" class="dropbtn">Patient Portal</a>
                         <div class="dropdown-content">
-                            <a href="Appointment-Page.html"><i class="fas fa-calendar-check"></i> Appointment</a>
-                            <a href="Billing-Page.html"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
-                            <a href="Medical-Record-Page.html"><i class="fas fa-file-medical"></i> Medical Record</a>
+                            <a href="Appointment-Page.php"><i class="fas fa-calendar-check"></i> Appointment</a>
+                            <a href="Billing-Page.php"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+                            <a href="Medical-Record-Page.php"><i class="fas fa-file-medical"></i> Medical Record</a>
                         </div>
                     </div>
-                    
+
                     <div class="dropdown">
                         <a href="#" class="dropbtn">Laboratory Tests</a>
                         <div class="dropdown-content">
-                            <a href="Test-Results-Page.html"><i class="fas fa-flask"></i> Test Result</a>
-                            <a href="Order-Page.html"><i class="fas fa-clipboard-list"></i> Request Tests</a>
-                            <a href="Test-History-Page.html"><i class="fas fa-history"></i> Test History</a>
+                            <a href="Test-Results-Page.php"><i class="fas fa-flask"></i> Test Result</a>
+                            <a href="Order-Page.php"><i class="fas fa-clipboard-list"></i> Request Tests</a>
+                            <a href="Test-History-Page.php"><i class="fas fa-history"></i> Test History</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- User Menu -->
-                <div class="user-menu" id="userMenu">
+                <!-- User Menu (visible only when logged in) -->
+                <div class="user-menu" id="userMenu" style="display: <?= isset($user_data) ? 'block' : 'none' ?>;">
                     <div class="dropdown">
                         <button class="dropbtn">
                             <i class="fas fa-user-circle"></i>
-                            <span>John Doe</span>
+                            <span><?= htmlspecialchars($user_data['user_name']) ?></span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="dropdown-content">
-                            <a href="Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
-                            <a href="Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
-                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            <a href="Profile-Page.php"><i class="fas fa-user"></i> Profile</a>
+                            <a href="Settings-Page.php"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="logout.php" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- Auth Buttons (visible only when logged out) -->
+                <div class="auth-buttons" id="authButtons" style="display: <?= isset($user_data) ? 'none' : 'flex' ?>;">
+                    <button class="sign-in"><a href="Login-Page.php"><i class="fas fa-sign-in-alt"></i> Sign in</a></button>
+                    <button class="register"><a href="Sign-Up-Page.html"><i class="fas fa-user-plus"></i> Register</a></button>
+                </div>
+
                 <!-- Hamburger Menu -->
                 <button class="hamburger" id="hamburgerBtn">
                     <i class="fas fa-bars"></i>
@@ -70,12 +164,26 @@
             <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">
                 <div class="mobile-menu-content">
-                    <!-- Content will be populated by JavaScript -->
+                    <!-- Populated by JS -->
                 </div>
             </div>
         </header>
         
         <main class="appointment-container">
+            <?php if (!empty($errors)): ?>
+                <div class="error-message">
+                    <?php foreach ($errors as $error): ?>
+                        <p><?php echo htmlspecialchars($error); ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($success): ?>
+                <div class="success-message">
+                    <p>Appointment booked successfully! A confirmation has been sent to your email.</p>
+                </div>
+            <?php endif; ?>
+            
             <div class="appointment-header">
                 <h1><i class="fas fa-calendar-alt"></i> Book an Appointment</h1>
                 <p>Schedule your health check with our certified specialists</p>
@@ -100,12 +208,27 @@
                 </div>
             </div>
             
-            <form id="appointmentForm">
+            <form id="appointmentForm" method="POST" action="Appointment-Page.php">
                 <!-- Step 1: Service Selection -->
                 <div class="form-step active" data-step="1">
                     <h2>Select Service</h2>
                     <p>Choose the type of health check you need</p>
                     
+                    <div class="service-options">
+                        <?php foreach ($services as $service): ?>
+                            <div class="service-card">
+                                <input type="radio" name="service_id" id="service-<?php echo htmlspecialchars($service['service_id']); ?>" 
+                                    value="<?php echo htmlspecialchars($service['service_id']); ?>" required>
+                                <label for="service-<?php echo htmlspecialchars($service['service_id']); ?>">
+                                    <i class="fas fa-<?php echo get_service_icon($service['name']); ?>"></i>
+                                    <h3><?php echo htmlspecialchars($service['name']); ?></h3>
+                                    <p><?php echo htmlspecialchars($service['description']); ?></p>
+                                    <div class="service-price">Php <?php echo number_format($service['price'], 2); ?></div>
+                                </label>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
                     <div class="service-options">
                         <div class="service-card">
                             <input type="radio" name="service" id="general-checkup" value="General Checkup" required>
@@ -162,7 +285,7 @@
                         <div class="calendar-container">
                             <div class="calendar-header">
                                 <button type="button" class="month-nav" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                                <h3 id="currentMonth">June 2023</h3>
+                                <h3 id="currentMonth"><?php echo date('F Y'); ?></h3>
                                 <button type="button" class="month-nav" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
                             </div>
                             <div class="calendar-grid" id="calendarGrid">
@@ -187,43 +310,42 @@
                 <!-- Step 3: Personal Details -->
                 <div class="form-step" data-step="3">
                     <h2>Your Information</h2>
-                    <p>Please provide your details for the appointment</p>
+                    <p>Please confirm your details for the appointment</p>
                     
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" name="fullName" required>
+                            <input type="text" id="fullName" name="fullName" 
+                                value="<?php echo htmlspecialchars($user_data['first_name'] . ' ' . $user_data['last_name']); ?>" readonly>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" 
+                                value="<?php echo htmlspecialchars($user_data['email']); ?>" readonly>
                         </div>
                         
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" pattern="[\+]\d{2}\s\d{3}\s\d{3}\s\d{4}" placeholder="+63 912 345 6789" required>
+                            <input type="tel" id="phone" name="phone" 
+                                value="<?php echo htmlspecialchars($user_data['phone'] ?? ''); ?>" readonly>
                         </div>
                         
                         <div class="form-group">
                             <label for="dob">Date of Birth</label>
-                            <input type="date" id="dob" name="dob" required>
+                            <input type="date" id="dob" name="dob" 
+                                value="<?php echo htmlspecialchars($user_data['date_of_birth'] ?? ''); ?>" readonly>
                         </div>
                         
                         <div class="form-group">
                             <label for="gender">Gender</label>
-                            <select id="gender" name="gender" required>
-                                <option value="" disabled selected>Select gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                                <option value="prefer-not-to-say">Prefer not to say</option>
-                            </select>
+                            <input type="text" id="gender" name="gender" 
+                                value="<?php echo ucfirst(htmlspecialchars($user_data['gender'] ?? '')); ?>" readonly>
                         </div>
                         
                         <div class="form-group">
                             <label for="address">Address</label>
-                            <textarea id="address" name="address" rows="3" required></textarea>
+                            <textarea id="address" name="address" rows="3" readonly><?php echo htmlspecialchars($user_data['address'] ?? ''); ?></textarea>
                         </div>
                         
                         <div class="form-group full-width">
@@ -248,23 +370,23 @@
                             <h3>Appointment Summary</h3>
                             <div class="detail-item">
                                 <span>Service:</span>
-                                <span id="confirm-service">General Checkup</span>
+                                <span id="confirm-service">Not selected</span>
                             </div>
                             <div class="detail-item">
                                 <span>Date:</span>
-                                <span id="confirm-date">June 15, 2023</span>
+                                <span id="confirm-date">Not selected</span>
                             </div>
                             <div class="detail-item">
                                 <span>Time:</span>
-                                <span id="confirm-time">10:00 AM</span>
+                                <span id="confirm-time">Not selected</span>
                             </div>
                             <div class="detail-item">
                                 <span>Duration:</span>
-                                <span id="confirm-duration">30 minutes</span>
+                                <span id="confirm-duration">Not selected</span>
                             </div>
                             <div class="detail-item total">
                                 <span>Total:</span>
-                                <span id="confirm-price">Php 500</span>
+                                <span id="confirm-price">Not selected</span>
                             </div>
                         </div>
                         
@@ -272,15 +394,15 @@
                             <h3>Your Information</h3>
                             <div class="detail-item">
                                 <span>Name:</span>
-                                <span id="confirm-name">John Doe</span>
+                                <span id="confirm-name"><?php echo htmlspecialchars($user_data['first_name'] . ' ' . $user_data['last_name']); ?></span>
                             </div>
                             <div class="detail-item">
                                 <span>Email:</span>
-                                <span id="confirm-email">john.doe@example.com</span>
+                                <span id="confirm-email"><?php echo htmlspecialchars($user_data['email']); ?></span>
                             </div>
                             <div class="detail-item">
                                 <span>Phone:</span>
-                                <span id="confirm-phone">+63 912 345 6789</span>
+                                <span id="confirm-phone"><?php echo htmlspecialchars($user_data['phone'] ?? 'Not provided'); ?></span>
                             </div>
                         </div>
                     </div>
@@ -289,6 +411,11 @@
                         <input type="checkbox" id="appointment-terms" required>
                         <label for="appointment-terms">I agree to the <a href="#">Terms of Service</a> and confirm that the information provided is accurate.</label>
                     </div>
+                    
+                    <!-- Hidden fields for form submission -->
+                    <input type="hidden" id="hidden-service-id" name="service_id">
+                    <input type="hidden" id="hidden-appointment-date" name="appointment_date">
+                    <input type="hidden" id="hidden-start-time" name="start_time">
                     
                     <div class="form-navigation">
                         <button type="button" class="btn-prev" data-prev="3"><i class="fas fa-arrow-left"></i> Back</button>
@@ -306,14 +433,19 @@
                 <div class="footer-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
-                    <a href="Contact-Us-Page.html">Contact Us</a>
+                    <a href="Contact-Us-Page.php">Contact Us</a>
                 </div>
-                <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
+                <p>&copy; <?php echo date('Y'); ?> MedicalChecks. All rights reserved.</p>
             </div>
         </footer>
 
         <script src="Scripts/Main.js"></script>
         <script src="Scripts/pages/Appointment.js"></script>
         
+        <script>
+            // Pass PHP data to JavaScript
+            const bookedSlots = <?php echo json_encode($booked_slots); ?>;
+            const services = <?php echo json_encode($services); ?>;
+        </script>
     </body>
 </html>
