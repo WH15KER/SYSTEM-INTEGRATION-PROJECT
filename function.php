@@ -289,4 +289,28 @@ function add_medical_record($con, $user_id, $data, $record_type) {
     
     return $response;
 }
+
+function execute_query($con, $query, $params = [], $types = "") {
+    $stmt = mysqli_prepare($con, $query);
+    if (!$stmt) {
+        throw new Exception("Prepare failed: " . mysqli_error($con));
+    }
+    
+    if (!empty($params)) {
+        if (empty($types)) {
+            $types = str_repeat("s", count($params));
+        }
+        mysqli_stmt_bind_param($stmt, $types, ...$params);
+    }
+    
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception("Execute failed: " . mysqli_stmt_error($stmt));
+    }
+    
+    return $stmt;
+}
+
+function log_error($message) {
+    error_log(date('[Y-m-d H:i:s] ') . $message . PHP_EOL, 3, 'error_log.txt');
+}
 ?>

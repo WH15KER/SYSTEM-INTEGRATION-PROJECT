@@ -1,7 +1,7 @@
 <?php
-session_start(); // Add this line at the very beginning
-require_once 'connection.php';
-require_once 'function.php';
+session_start();
+require_once('connection.php');
+require_once('function.php');
 
 // Check if user is logged in
 $user_data = check_login($con);
@@ -13,10 +13,10 @@ $success = false;
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and sanitize input
-    $service_id = sanitize_input($con, $_POST['service_id'] ?? '');
-    $appointment_date = sanitize_input($con, $_POST['appointment_date'] ?? '');
-    $start_time = sanitize_input($con, $_POST['start_time'] ?? '');
-    $notes = sanitize_input($con, $_POST['notes'] ?? '');
+    $service_id = isset($_POST['service_id']) ? sanitize_input($con, $_POST['service_id']) : '';
+    $appointment_date = isset($_POST['appointment_date']) ? sanitize_input($con, $_POST['appointment_date']) : '';
+    $start_time = isset($_POST['start_time']) ? sanitize_input($con, $_POST['start_time']) : '';
+    $notes = isset($_POST['notes']) ? sanitize_input($con, $_POST['notes']) : '';
     
     // Validate inputs
     if (empty($service_id)) {
@@ -45,26 +45,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
         
         $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param(
-            $stmt, 
-            "ssssssss", 
-            $appointment_id, 
-            $user_data['user_id'], 
-            $service_id, 
-            $appointment_date, 
-            $start_time, 
-            $end_time, 
-            $status, 
-            $notes
-        );
-        
-        if (mysqli_stmt_execute($stmt)) {
-            $success = true;
+        if ($stmt) {
+            mysqli_stmt_bind_param(
+                $stmt, 
+                "ssssssss", 
+                $appointment_id, 
+                $user_data['user_id'], 
+                $service_id, 
+                $appointment_date, 
+                $start_time, 
+                $end_time, 
+                $status, 
+                $notes
+            );
             
-            // Reset form values
-            $_POST = [];
+            if (mysqli_stmt_execute($stmt)) {
+                $success = true;
+                // Reset form values
+                $_POST = [];
+            } else {
+                $errors[] = "Failed to book appointment: " . mysqli_error($con);
+            }
+            mysqli_stmt_close($stmt);
         } else {
-            $errors[] = "Failed to book appointment. Please try again.";
+            $errors[] = "Database error: " . mysqli_error($con);
         }
     }
 }

@@ -92,7 +92,7 @@ $user_data = check_login($con);
             <div class="hero-content">
                 <h1>Take Control of Your Health</h1>
                 <p>Regular health checks can detect potential issues early and help prevent serious conditions. Start your wellness journey today.</p>
-                <a href="Appointment-Page.html" class="check-now">
+                <a href="Appointment-Page.php" class="check-now">
                     <i class="fas fa-calendar-alt"></i> Book an Appointment
                 </a>
             </div>

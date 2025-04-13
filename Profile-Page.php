@@ -18,48 +18,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_profile'])) {
     $address = isset($_POST['address']) ? sanitize_input($con, $_POST['address']) : '';
     $physician = isset($_POST['physician']) ? sanitize_input($con, $_POST['physician']) : '';
 
-    // Split full name into first and last name
-    $nameParts = explode(' ', $fullName, 2);
-    $firstName = $nameParts[0];
-    $lastName = isset($nameParts[1]) ? $nameParts[1] : '';
-
-    // Update user data in database
-    $query = "UPDATE users SET 
-              first_name = ?, 
-              last_name = ?, 
-              date_of_birth = ?, 
-              gender = ?, 
-              email = ?, 
-              phone = ?, 
-              blood_type = ?, 
-              address = ?, 
-              primary_physician = ? 
-              WHERE user_id = ?";
-    
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, "ssssssssss", 
-        $firstName, 
-        $lastName, 
-        $dob, 
-        $gender, 
-        $email, 
-        $phone, 
-        $bloodType, 
-        $address, 
-        $physician, 
-        $user_data['user_id']
-    );
-    
-    if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['success_message'] = 'Profile updated successfully!';
-        // Refresh user data
-        $user_data = check_login($con);
-        // Force immediate update by redirecting
-        header("Location: Profile-Page.php");
-        exit();
+    // Validate required fields
+    if (empty($fullName) || empty($email)) {
+        $_SESSION['error_message'] = 'Full name and email are required fields';
     } else {
-        $_SESSION['error_message'] = 'Failed to update profile: ' . mysqli_error($con);
+        // Split full name into first and last name
+        $nameParts = explode(' ', $fullName, 2);
+        $firstName = $nameParts[0];
+        $lastName = isset($nameParts[1]) ? $nameParts[1] : '';
+
+        // Update user data in database
+        $query = "UPDATE users SET 
+                  first_name = ?, 
+                  last_name = ?, 
+                  date_of_birth = ?, 
+                  gender = ?, 
+                  email = ?, 
+                  phone = ?, 
+                  blood_type = ?, 
+                  address = ?, 
+                  primary_physician = ? 
+                  WHERE user_id = ?";
+        
+        $stmt = mysqli_prepare($con, $query);
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "ssssssssss", 
+                $firstName, 
+                $lastName, 
+                $dob, 
+                $gender, 
+                $email, 
+                $phone, 
+                $bloodType, 
+                $address, 
+                $physician, 
+                $user_data['user_id']
+            );
+            
+            if (mysqli_stmt_execute($stmt)) {
+                $_SESSION['success_message'] = 'Profile updated successfully!';
+                // Refresh user data
+                $user_data = check_login($con);
+            } else {
+                $_SESSION['error_message'] = 'Failed to update profile: ' . mysqli_error($con);
+            }
+            mysqli_stmt_close($stmt);
+        } else {
+            $_SESSION['error_message'] = 'Database error: ' . mysqli_error($con);
+        }
     }
+    
+    // Force immediate update by redirecting
+    header("Location: Profile-Page.php");
+    exit();
 }
 
 // Format date of birth for display

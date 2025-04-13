@@ -8,10 +8,10 @@ $error_message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize and validate input
-    $name = sanitize_input($con, $_POST['name'] ?? '');
-    $surname = sanitize_input($con, $_POST['surname'] ?? '');
-    $email = sanitize_input($con, $_POST['email'] ?? '');
-    $message = sanitize_input($con, $_POST['message'] ?? '');
+    $name = isset($_POST['name']) ? sanitize_input($con, $_POST['name']) : '';
+    $surname = isset($_POST['surname']) ? sanitize_input($con, $_POST['surname']) : '';
+    $email = isset($_POST['email']) ? sanitize_input($con, $_POST['email']) : '';
+    $message = isset($_POST['message']) ? sanitize_input($con, $_POST['message']) : '';
     
     // Basic validation
     if (empty($name)) {
@@ -27,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $submission_id = 'CS-' . random_num(8);
         
         try {
+            // Start transaction
+            mysqli_begin_transaction($con);
+            
             // Insert into database
             $query = "INSERT INTO contact_submissions (submission_id, name, surname, email, message) 
                       VALUES (?, ?, ?, ?, ?)";
@@ -36,19 +39,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 mysqli_stmt_bind_param($stmt, "sssss", $submission_id, $name, $surname, $email, $message);
                 
                 if (mysqli_stmt_execute($stmt)) {
+                    mysqli_commit($con);
                     $success_message = "Thank you for your message! We'll get back to you soon.";
                     // Clear form fields
                     $name = $surname = $email = $message = '';
                 } else {
+                    mysqli_rollback($con);
                     error_log("Database error: " . mysqli_error($con));
                     $error_message = "Error submitting your message. Please try again later.";
                 }
                 mysqli_stmt_close($stmt);
             } else {
+                mysqli_rollback($con);
                 error_log("Prepare statement failed: " . mysqli_error($con));
                 $error_message = "Database error. Please try again later.";
             }
         } catch (Exception $e) {
+            mysqli_rollback($con);
             error_log("Exception: " . $e->getMessage());
             $error_message = "An unexpected error occurred. Please try again later.";
         }
