@@ -1,25 +1,23 @@
 <?php
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "medical_check_db";
+// connection.php
+$host = 'localhost';
+$user = 'root';
+$password = '';
+$database = 'medical_check_db'; // Change to your database name
 
-// Enable error reporting
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+// Error reporting for development
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-try {
-    $con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
-    
-    if (!$con) {
-        throw new Exception("Failed to connect: " . mysqli_connect_error());
-    }
-    
-    // Set charset to utf8mb4 for full Unicode support
-    mysqli_set_charset($con, "utf8mb4");
-    
-} catch (Exception $e) {
-    // Log the error and display a user-friendly message
-    error_log("Database connection error: " . $e->getMessage());
-    die("We're experiencing technical difficulties. Please try again later.");
+// Create connection with error handling
+$con = mysqli_connect($host, $user, $password, $database);
+
+// Check connection
+if (!$con) {
+    error_log("Connection failed: " . mysqli_connect_error());
+    die("Connection failed. Please try again later. Error: " . mysqli_connect_error());
 }
+
+// Set charset to utf8mb4 for full Unicode support
+mysqli_set_charset($con, 'utf8mb4');
 ?>
