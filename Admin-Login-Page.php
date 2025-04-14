@@ -1,11 +1,40 @@
-<php?
+<?php
 
+	session_start();
+	include("connection.php");
+	include("admin-function.php");
 
+$error = "";
 
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $email = sanitize_input($con, $_POST['email']);
+    $password = sanitize_input($con, $_POST['password']);
 
-?
+    if (!empty($email) && !empty($password) && is_valid_email($email)) {
+        // Check user credentials
+        $query = "SELECT * FROM users WHERE user_name = ? LIMIT 1";
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
+        if ($result && mysqli_num_rows($result) > 0) {
+            $user_data = mysqli_fetch_assoc($result);
+            
+            if (password_verify($password, $user_data['password'])) {
+                $_SESSION['user_id'] = $user_data['user_id'];
+                header("Location: index.php");
+                die;
+            }
+        }
+        
+        $error = "Invalid email or password!";
+    } else {
+        $error = "Please enter valid email and password!";
+    }
+}
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
