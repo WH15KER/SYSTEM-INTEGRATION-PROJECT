@@ -353,6 +353,24 @@ body {
     display: none;
 }
 
+.error-message {
+    background-color: #ffeeee;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--error-color);
+    margin-bottom: 20px;
+}
+
+.success-message {
+    background-color: #eeffee;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--success-color);
+    margin-bottom: 20px;
+}
+
+/* Rest of your existing CSS remains the same */
+
 /* Footer */
 footer {
     background-color: var(--secondary-color);

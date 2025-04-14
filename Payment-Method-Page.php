@@ -1,3 +1,155 @@
+<?php
+session_start();
+require_once 'connection.php';
+require_once 'function.php';
+
+// Check if user is logged in
+$user_data = check_login($con);
+
+// Initialize variables
+$error = '';
+$success = '';
+$test_type = 'Standard Test';
+$price = 50.00;
+$total = $price;
+
+// Process payment if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate form inputs
+    $cardholder_name = sanitize_input($con, $_POST['name'] ?? '');
+    $card_number = sanitize_input($con, str_replace(' ', '', $_POST['card-number'] ?? ''));
+    $expiry_date = sanitize_input($con, $_POST['valid-until'] ?? '');
+    $cvv = sanitize_input($con, $_POST['cvv'] ?? '');
+    $billing_address = sanitize_input($con, $_POST['address'] ?? '');
+    $contact_number = sanitize_input($con, $_POST['contact'] ?? '');
+    $payment_method = sanitize_input($con, $_POST['payment-method'] ?? 'credit-card');
+    
+    // Basic validation
+    if (empty($cardholder_name)) {
+        $error = 'Cardholder name is required';
+    } elseif (!preg_match('/^\d{16}$/', $card_number)) {
+        $error = 'Invalid card number';
+    } elseif (!preg_match('/^\d{3}$/', $cvv)) {
+        $error = 'Invalid CVV';
+    } elseif (empty($billing_address)) {
+        $error = 'Billing address is required';
+    } elseif (empty($contact_number)) {
+        $error = 'Contact number is required';
+    } elseif (!isset($_POST['terms'])) {
+        $error = 'You must agree to the Terms of Service and Privacy Policy';
+    }
+    
+    if (empty($error)) {
+        try {
+            // Start transaction
+            mysqli_begin_transaction($con);
+            
+            // Create invoice
+            $invoice_number = 'INV-' . date('Ymd') . '-' . random_num(4);
+            $issue_date = date('Y-m-d');
+            $due_date = date('Y-m-d', strtotime('+7 days'));
+            
+            $invoice_query = "INSERT INTO invoices (
+                invoice_id, user_id, invoice_number, issue_date, due_date, 
+                status, subtotal, tax, discount, total
+            ) VALUES (
+                UUID(), ?, ?, ?, ?, 
+                'paid', ?, 0, 0, ?
+            )";
+            
+            $stmt = mysqli_prepare($con, $invoice_query);
+            mysqli_stmt_bind_param($stmt, "ssssdd", 
+                $user_data['user_id'], 
+                $invoice_number, 
+                $issue_date, 
+                $due_date, 
+                $total, 
+                $total
+            );
+            mysqli_stmt_execute($stmt);
+            $invoice_id = mysqli_insert_id($con);
+            
+            // Add invoice item
+            $item_query = "INSERT INTO invoice_items (
+                item_id, invoice_id, description, quantity, unit_price, total_price
+            ) VALUES (
+                UUID(), ?, ?, 1, ?, ?
+            )";
+            
+            $stmt = mysqli_prepare($con, $item_query);
+            mysqli_stmt_bind_param($stmt, "ssdd", 
+                $invoice_id, 
+                $test_type, 
+                $price, 
+                $total
+            );
+            mysqli_stmt_execute($stmt);
+            
+            // Record payment
+            $payment_query = "INSERT INTO payments (
+                payment_id, invoice_id, user_id, payment_date, amount, 
+                payment_method, transaction_reference, status
+            ) VALUES (
+                UUID(), ?, ?, NOW(), ?, 
+                ?, UUID(), 'completed'
+            )";
+            
+            $stmt = mysqli_prepare($con, $invoice_query);
+            mysqli_stmt_bind_param($stmt, "ssds", 
+                $invoice_id, 
+                $user_data['user_id'], 
+                $total, 
+                $payment_method
+            );
+            mysqli_stmt_execute($stmt);
+            
+            // Save card details if credit card
+            if ($payment_method === 'credit-card') {
+                $card_type = 'other';
+                if (preg_match('/^4/', $card_number)) $card_type = 'visa';
+                elseif (preg_match('/^5[1-5]/', $card_number)) $card_type = 'mastercard';
+                elseif (preg_match('/^3[47]/', $card_number)) $card_type = 'amex';
+                
+                $last_four = substr($card_number, -4);
+                $expiry_parts = explode('-', $expiry_date);
+                
+                $card_query = "INSERT INTO payment_cards (
+                    card_id, user_id, card_type, last_four, 
+                    expiry_month, expiry_year, cardholder_name, is_default
+                ) VALUES (
+                    UUID(), ?, ?, ?, 
+                    ?, ?, ?, 1
+                )";
+                
+                $stmt = mysqli_prepare($con, $card_query);
+                mysqli_stmt_bind_param($stmt, "ssssss", 
+                    $user_data['user_id'], 
+                    $card_type, 
+                    $last_four, 
+                    $expiry_parts[1], 
+                    $expiry_parts[0], 
+                    $cardholder_name
+                );
+                mysqli_stmt_execute($stmt);
+            }
+            
+            // Commit transaction
+            mysqli_commit($con);
+            
+            $success = 'Payment successful! Your lab results are now available.';
+            
+            // Redirect to results page or show success
+            header("Location: Results-Page.php?payment=success");
+            exit();
+            
+        } catch (Exception $e) {
+            mysqli_rollback($con);
+            $error = 'Payment failed: ' . $e->getMessage();
+            log_error("Payment Error: " . $e->getMessage());
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +167,7 @@
                     <span>MedicalChecks</span>
                 </div>
                 <div class="back-to-results">
-                    <a href="Billing-Page.html"><i class="fas fa-arrow-left"></i> Back to Results</a>
+                    <a href="Billing-Page.php"><i class="fas fa-arrow-left"></i> Back to Results</a>
                 </div>
             </nav>
         </header>
@@ -26,15 +178,15 @@
                     <h3>Order Summary</h3>
                     <div class="summary-item">
                         <span>Test Type:</span>
-                        <span>Standard Test</span>
+                        <span><?php echo htmlspecialchars($test_type); ?></span>
                     </div>
                     <div class="summary-item">
                         <span>Price:</span>
-                        <span>Php 50.00</span>
+                        <span>Php <?php echo number_format($price, 2); ?></span>
                     </div>
                     <div class="summary-item total">
                         <span>Total:</span>
-                        <span>Php 50.00</span>
+                        <span>Php <?php echo number_format($total, 2); ?></span>
                     </div>
                     <div class="secure-payment">
                         <i class="fas fa-lock"></i>
@@ -46,22 +198,30 @@
                 <div class="payment-header">
                     <h2>Payment Method</h2>
                     <p>Complete your payment to access your lab results</p>
+                    <?php if (!empty($error)): ?>
+                        <div class="error-message" style="color: red; margin-top: 10px;"><?php echo htmlspecialchars($error); ?></div>
+                    <?php endif; ?>
+                    <?php if (!empty($success)): ?>
+                        <div class="success-message" style="color: green; margin-top: 10px;"><?php echo htmlspecialchars($success); ?></div>
+                    <?php endif; ?>
                 </div>
                 
-                <div class="payment-methods">
-                    <button class="payment-method active" data-method="credit-card">
-                        <i class="fas fa-credit-card"></i> 
-                        <span>Credit/Debit Card</span>
-                        <i class="fas fa-check-circle"></i>
-                    </button>
-                    <button class="payment-method" data-method="gcash">
-                        <i class="fas fa-mobile-alt"></i> 
-                        <span>GCash</span>
-                        <i class="fas fa-check-circle"></i>
-                    </button>
-                </div>
-                
-                <form id="paymentForm">
+                <form id="paymentForm" method="POST" action="">
+                    <input type="hidden" name="payment-method" id="paymentMethod" value="credit-card">
+                    
+                    <div class="payment-methods">
+                        <button type="button" class="payment-method active" data-method="credit-card">
+                            <i class="fas fa-credit-card"></i> 
+                            <span>Credit/Debit Card</span>
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                        <button type="button" class="payment-method" data-method="gcash">
+                            <i class="fas fa-mobile-alt"></i> 
+                            <span>GCash</span>
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                    </div>
+                    
                     <div class="credit-card-info">
                         <div class="form-header">
                             <h3>Card Information</h3>
@@ -74,24 +234,24 @@
                         
                         <div class="form-group">
                             <label for="name">Cardholder Name</label>
-                            <input type="text" id="name" placeholder="John Doe" required>
+                            <input type="text" id="name" name="name" placeholder="John Doe" value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="card-number">Card Number</label>
                             <div class="input-with-icon">
-                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" pattern="\d{16}" title="16-digit card number" required>
+                                <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" pattern="\d{16}" title="16-digit card number" value="<?php echo htmlspecialchars($_POST['card-number'] ?? ''); ?>" required>
                                 <i class="far fa-credit-card"></i>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="valid-until">Expiry Date</label>
-                                <input type="month" id="valid-until" placeholder="MM/YY" required>
+                                <input type="month" id="valid-until" name="valid-until" placeholder="MM/YY" value="<?php echo htmlspecialchars($_POST['valid-until'] ?? ''); ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="cvv">CVV</label>
                                 <div class="input-with-icon">
-                                    <input type="text" id="cvv" placeholder="123" pattern="\d{3}" title="3-digit CVV" required>
+                                    <input type="text" id="cvv" name="cvv" placeholder="123" pattern="\d{3}" title="3-digit CVV" value="<?php echo htmlspecialchars($_POST['cvv'] ?? ''); ?>" required>
                                     <i class="fas fa-question-circle" title="3-digit code on back of card"></i>
                                 </div>
                             </div>
@@ -102,21 +262,21 @@
                         <h3>Billing Information</h3>
                         <div class="form-group">
                             <label for="address">Billing Address</label>
-                            <textarea id="address" placeholder="Street, Province, City, Country" required></textarea>
+                            <textarea id="address" name="address" placeholder="Street, Province, City, Country" required><?php echo htmlspecialchars($_POST['address'] ?? ''); ?></textarea>
                         </div>
                         <div class="form-group">
                             <label for="contact">Contact Number</label>
-                            <input type="tel" id="contact" placeholder="+63 912 345 6789" pattern="[\+]\d{2}\s\d{3}\s\d{3}\s\d{4}" required>
+                            <input type="tel" id="contact" name="contact" placeholder="+63 912 345 6789" pattern="[\+]\d{2}\s\d{3}\s\d{3}\s\d{4}" value="<?php echo htmlspecialchars($_POST['contact'] ?? ''); ?>" required>
                         </div>
                     </div>
                     
                     <div class="terms-agreement">
-                        <input type="checkbox" id="terms" required>
+                        <input type="checkbox" id="terms" name="terms" required <?php echo isset($_POST['terms']) ? 'checked' : ''; ?>>
                         <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
                     </div>
                     
-                    <button class="pay-button" id="payButton">
-                        <span class="button-text">Pay Php 50.00</span>
+                    <button class="pay-button" id="payButton" type="submit">
+                        <span class="button-text">Pay Php <?php echo number_format($total, 2); ?></span>
                         <span class="spinner hidden"><i class="fas fa-spinner fa-spin"></i></span>
                     </button>
                 </form>
@@ -128,7 +288,7 @@
                 <div class="footer-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
-                    <a href="Contact-Us-Page.html">Contact Us</a>
+                    <a href="Contact-Us-Page.php">Contact Us</a>
                 </div>
                 <p>&copy; 2025 MedicalChecks. All rights reserved.</p>
             </div>
@@ -136,6 +296,5 @@
 
         <script src="Scripts/Main.js"></script>
         <script src="Scripts/pages/Payment-Method.js"></script>
-        
     </body>
 </html>

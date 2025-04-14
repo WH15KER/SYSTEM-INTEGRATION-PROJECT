@@ -58,7 +58,7 @@ $user_data = check_login($con);
                     <div class="dropdown">
                         <button class="dropbtn">
                             <i class="fas fa-user-circle"></i>
-                            <span><?= htmlspecialchars($user_data['user_name']) ?></span>
+                            <span><?= htmlspecialchars($user_data['first_name']) ?></span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="dropdown-content">
@@ -68,6 +68,7 @@ $user_data = check_login($con);
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Auth Buttons (visible only when logged out) -->
                 <div class="auth-buttons" id="authButtons" style="display: <?= isset($user_data) ? 'none' : 'flex' ?>;">
