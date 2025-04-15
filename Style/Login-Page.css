@@ -63,7 +63,8 @@ label {
 }
 
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="text"] {
   width: 100%;
   padding: 12px 15px 12px 40px;
   border: 1px solid #ddd;
@@ -74,10 +75,27 @@ input[type="password"] {
 }
 
 input[type="email"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="text"]:focus {
   border-color: #f0ad4e;
   box-shadow: 0 0 0 3px rgba(240, 173, 78, 0.2);
   outline: none;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+  color: var(--text-lighter);
+  transition: var(--transition);
+}
+
+.toggle-password:hover {
+  color: var(--primary-color);
 }
 
 .remember-forgot {
@@ -122,6 +140,10 @@ input[type="password"]:focus {
   font-weight: 600;
   transition: all 0.3s ease;
   margin-bottom: 15px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-signin:hover {
@@ -129,6 +151,16 @@ input[type="password"]:focus {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(240, 173, 78, 0.3);
 }
+
+.btn-signin:active {
+  transform: translateY(0);
+}
+
+.btn-signin:hover::after {
+  left: 110%;
+}
+
+
 
 .divider {
   display: flex;

@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <title>Welcome Back | Sign In</title>
     <link rel="stylesheet" href="Style/Login-Page.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
     <body>
         <div class="login-container">
@@ -64,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
+                    <div class="input-with-icon password-container">
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <i class="fas fa-eye toggle-password"></i>
                     </div>
                 </div>
 
@@ -77,8 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <a href="Forgot-Password-Page.php" class="forgot-password">Forgot password?</a>
                 </div>
 
-                <button type="submit" class="btn-signin">Sign In</button>
-
+                <button type="submit" class="btn btn-signin">Sign In</button>
+                
                 <div class="divider">
                     <span>or</span>
                 </div>
