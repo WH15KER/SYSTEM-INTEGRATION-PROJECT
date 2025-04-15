@@ -233,6 +233,19 @@ button:hover {
   opacity: 0.7;
 }
 
+.error-message {
+  color: var(--accent-color);
+  background-color: rgba(231, 76, 60, 0.1);
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 3px solid var(--accent-color);
+}
+
 /* Animations */
 @keyframes spin {
   0% { transform: rotate(0deg); }

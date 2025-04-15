@@ -1,8 +1,10 @@
-<php?
+<?php
+session_start();
+include("connection.php");
+include("admin-function.php");
 
-
-
-
+// Check if admin is logged in
+$admin_data = check_admin_login($con);
 ?>
 
 <!DOCTYPE html>
@@ -16,63 +18,63 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-    <body>
-        <header>
-            <nav class="navbar">
-                <div class="nav-logo">
-                    <i class="fas fa-heartbeat"></i>
-                    <span>MedicalChecks</span>
-                </div>
-                
-                <div class="nav-links" id="mainNavLinks">
-                    <div class="dropdown">
-                        <a href="#" class="dropbtn active">Home</a>
-                        <div class="dropdown-content">
-                            <a href="Admin-Dashboard-Page.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                        </div>
-                    </div>
-                    
-                    <div class="dropdown">
-                        <a href="#" class="dropbtn">Admin Portal</a>
-                        <div class="dropdown-content">
-                            <a href="Admin-Account-Management-Page.html"><i class="fas fa-users-cog"></i> Account Management</a>
-                            <a href="Admin-Reports-Page.html"><i class="fas fa-chart-bar"></i> Reports</a>
-                            <a href="Admin-Inventory-Management-Page.html"><i class="fas fa-boxes"></i> Inventory</a>
-                        </div>
-                    </div>
-                    
-                    <div class="dropdown">
-                        <a href="#" class="dropbtn">System</a>
-                        <div class="dropdown-content">
-                            <a href="Admin-Settings-Page.html"><i class="fas fa-cog"></i> Settings</a>
-                            <a href="Admin-Audit-Logs-Page.html"><i class="fas fa-clipboard-list"></i> Audit Logs</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="user-menu" id="userMenu">
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            <i class="fas fa-user-circle"></i>
-                            <span>Admin User</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="Admin-Profile-Page.html"><i class="fas fa-user"></i> Profile</a>
-                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="hamburger" id="hamburgerBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
-
-            <div class="mobile-menu" id="mobileMenu">
-                <div class="mobile-menu-content"></div>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MedicalChecks</span>
             </div>
-        </header>
+            
+            <div class="nav-links" id="mainNavLinks">
+                <div class="dropdown">
+                    <a href="#" class="dropbtn active">Home</a>
+                    <div class="dropdown-content">
+                        <a href="Admin-Dashboard-Page.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Admin Portal</a>
+                    <div class="dropdown-content">
+                        <a href="Admin-Account-Management-Page.php"><i class="fas fa-users-cog"></i> Account Management</a>
+                        <a href="Admin-Reports-Page.php"><i class="fas fa-chart-bar"></i> Reports</a>
+                        <a href="Admin-Inventory-Management-Page.php"><i class="fas fa-boxes"></i> Inventory</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">System</a>
+                    <div class="dropdown-content">
+                        <a href="Admin-Settings-Page.php"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="Admin-Audit-Logs-Page.php"><i class="fas fa-clipboard-list"></i> Audit Logs</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-menu" id="userMenu">
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span><?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="Admin-Profile-Page.php"><i class="fas fa-user"></i> Profile</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="hamburger" id="hamburgerBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content"></div>
+        </div>
+    </header>
         
         <main class="dashboard-container">
             <div class="dashboard-header">

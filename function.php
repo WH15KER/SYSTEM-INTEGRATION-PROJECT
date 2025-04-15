@@ -313,4 +313,16 @@ function execute_query($con, $query, $params = [], $types = "") {
 function log_error($message) {
     error_log(date('[Y-m-d H:i:s] ') . $message . PHP_EOL, 3, 'error_log.txt');
 }
+
+function generate_secure_password($length = 12) {
+    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?';
+    $password = '';
+    $chars_length = strlen($chars) - 1;
+    
+    for ($i = 0; $i < $length; $i++) {
+        $password .= $chars[rand(0, $chars_length)];
+    }
+    
+    return $password;
+}
 ?>

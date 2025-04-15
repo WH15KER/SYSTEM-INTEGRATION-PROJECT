@@ -1,39 +1,9 @@
 <?php
-
-	session_start();
-	include("connection.php");
-	include("admin-function.php");
+session_start();
+include("connection.php");
+include("admin-function.php");
 
 $error = "";
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $email = sanitize_input($con, $_POST['email']);
-    $password = sanitize_input($con, $_POST['password']);
-
-    if (!empty($email) && !empty($password) && is_valid_email($email)) {
-        // Check user credentials
-        $query = "SELECT * FROM users WHERE user_name = ? LIMIT 1";
-        $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, "s", $email);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user_data = mysqli_fetch_assoc($result);
-            
-            if (password_verify($password, $user_data['password'])) {
-                $_SESSION['user_id'] = $user_data['user_id'];
-                header("Location: index.php");
-                die;
-            }
-        }
-        
-        $error = "Invalid email or password!";
-    } else {
-        $error = "Please enter valid email and password!";
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -59,14 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     </div>
                     <h1>Admin Portal</h1>
                     <p class="welcome-text">Sign in to access the dashboard</p>
+                    
+                    <?php if (!empty($error)): ?>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> <?php echo $error; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-                <form id="adminLoginForm">
+                <form method="POST" id="adminLoginForm">
                     <div class="form-group">
-                        <label for="email">
+                        <label for="username">
                             <i class="fas fa-user"></i> Username
                         </label>
-                        <input type="text" id="email" name="username" placeholder="Enter admin username" required autocomplete="username">
+                        <input type="text" id="username" name="username" placeholder="Enter admin username" required autocomplete="username">
                     </div>
 
                     <div class="form-group">
@@ -85,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         <label class="remember-me">
                             <input type="checkbox" name="remember"> Remember this device
                         </label>
-                        <a href="Forgot-Password-Page.html" class="forgot-password">Forgot password?</a>
+                        <a href="Forgot-Password-Page." class="forgot-password">Forgot password?</a>
                     </div>
 
                     <button type="submit" id="loginButton">
