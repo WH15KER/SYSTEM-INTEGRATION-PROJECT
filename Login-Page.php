@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password = sanitize_input($con, $_POST['password']);
 
     if (!empty($email) && !empty($password) && is_valid_email($email)) {
-        // Check user credentials
-        $query = "SELECT * FROM users WHERE user_name = ? LIMIT 1";
+        // Check user credentials - changed to check email field instead of user_name
+        $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
         $stmt = mysqli_prepare($con, $query);
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);

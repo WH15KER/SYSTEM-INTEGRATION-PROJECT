@@ -4,7 +4,32 @@ include("connection.php");
 include("admin-function.php");
 
 $error = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $_SESSION['username'] = $username; 
+    $password = $_POST['password'];
+    
+    if (authenticateAdmin($username, $password)) {
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_email'] = $username;
+        
+        // Handle "Remember me" functionality if needed
+        if (isset($_POST['remember'])) {
+            // Set a long-term cookie (30 days)
+            setcookie('remember_token', 'admin_remember', time() + (30 * 24 * 60 * 60), "/");
+        }
+        
+        header("Location: Admin-Dashboard-Page.php");
+        exit();
+    } else {
+        $error = "Invalid email or password";
+    }
+}
 ?>
+
+<!DOCTYPE html>
+<!-- Rest of your HTML remains the same -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +47,7 @@ $error = "";
                 <span>Secure Admin Portal</span>
             </div>
         
-            <div class="login-container animate__animated animate__fadeIn">
+            <div class="login-container">
                 <div class="login-header">
                     <div class="logo">
                         <i class="fas fa-user-shield admin-icon"></i>
@@ -40,9 +65,9 @@ $error = "";
                 <form method="POST" id="adminLoginForm">
                     <div class="form-group">
                         <label for="username">
-                            <i class="fas fa-user"></i> Username
+                            <i class="fas fa-user"></i> Email
                         </label>
-                        <input type="text" id="username" name="username" placeholder="Enter admin username" required autocomplete="username">
+                        <input type="text" id="username" name="username" placeholder="Enter admin email" required autocomplete="username">
                     </div>
 
                     <div class="form-group">
@@ -61,7 +86,7 @@ $error = "";
                         <label class="remember-me">
                             <input type="checkbox" name="remember"> Remember this device
                         </label>
-                        <a href="Forgot-Password-Page." class="forgot-password">Forgot password?</a>
+                        <a href="Forgot-Password-Page.php" class="forgot-password">Forgot password?</a>
                     </div>
 
                     <button type="submit" id="loginButton">

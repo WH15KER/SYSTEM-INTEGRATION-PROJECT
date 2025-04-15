@@ -19,6 +19,21 @@ function check_login($con) {
     die;
 }
 
+function is_valid_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+function sanitize_input($con, $data) {
+    return mysqli_real_escape_string($con, htmlspecialchars(trim($data)));
+}
+
+function generate_uuid() {
+    $data = random_bytes(16);
+    $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // Version 4
+    $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // Variant RFC 4122
+    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+}
+
 function random_num($length) {
     $text = "";
     if ($length < 5) {
@@ -31,14 +46,6 @@ function random_num($length) {
     }
     
     return $text;
-}
-
-function sanitize_input($con, $data) {
-    return mysqli_real_escape_string($con, htmlspecialchars(trim($data)));
-}
-
-function is_valid_email($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 function email_exists($con, $email) {
@@ -325,4 +332,71 @@ function generate_secure_password($length = 12) {
     
     return $password;
 }
+
+function setup_super_admin($con, $user_id) {
+    // Create system role if not exists
+    $role_id = generate_uuid();
+    $query = "INSERT INTO admin_roles (role_id, name, description, is_system_role) 
+              VALUES (?, 'Super Admin', 'Has all permissions in the system', TRUE)
+              ON DUPLICATE KEY UPDATE role_id=role_id";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "s", $role_id);
+    mysqli_stmt_execute($stmt);
+
+    // Get all available permissions and assign to this role
+    $query = "INSERT IGNORE INTO role_permissions (role_id, permission_id)
+              SELECT ?, permission_id FROM admin_permissions";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "s", $role_id);
+    mysqli_stmt_execute($stmt);
+
+    // Create admin user record
+    $admin_id = generate_uuid();
+    $query = "INSERT INTO admin_users (admin_id, user_id, role_id, is_active) 
+              VALUES (?, ?, ?, TRUE)";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "sss", $admin_id, $user_id, $role_id);
+    mysqli_stmt_execute($stmt);
+
+    return true;
+}
+
+function create_default_permissions($con) {
+    $permissions = [
+        ['Manage Users', 'manage_users', 'Can create, edit, and delete users'],
+        ['Manage Roles', 'manage_roles', 'Can create, edit, and delete roles and permissions'],
+        ['Manage Appointments', 'manage_appointments', 'Can view and manage all appointments'],
+        ['Manage Medical Records', 'manage_records', 'Can view and manage medical records'],
+        ['Manage Inventory', 'manage_inventory', 'Can manage inventory items'],
+        ['System Configuration', 'system_config', 'Can change system settings'],
+        ['View Reports', 'view_reports', 'Can access all system reports'],
+        ['Full Access', 'full_access', 'Has unrestricted access to all features']
+    ];
+
+    foreach ($permissions as $perm) {
+        $perm_id = generate_uuid();
+        $query = "INSERT IGNORE INTO admin_permissions (permission_id, name, code, description) 
+                  VALUES (?, ?, ?, ?)";
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, "ssss", $perm_id, $perm[0], $perm[1], $perm[2]);
+        mysqli_stmt_execute($stmt);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>

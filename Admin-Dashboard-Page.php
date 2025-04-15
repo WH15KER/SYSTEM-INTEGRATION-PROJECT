@@ -1,10 +1,9 @@
 <?php
 session_start();
-include("connection.php");
-include("admin-function.php");
-
-// Check if admin is logged in
-$admin_data = check_admin_login($con);
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: Admin-Login-Page.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +55,7 @@ $admin_data = check_admin_login($con);
                 <div class="dropdown">
                     <button class="dropbtn">
                         <i class="fas fa-user-circle"></i>
-                        <span><?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                        <span><?php echo htmlspecialchars($_SESSION['admin_email']); ?></span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="dropdown-content">
