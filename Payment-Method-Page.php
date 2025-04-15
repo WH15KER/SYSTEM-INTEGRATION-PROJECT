@@ -145,8 +145,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Commit transaction
             mysqli_commit($con);
 
-            // Redirect to billing page with success parameter
-            header("Location: Billing-Page.php?payment=success");
+            // Store payment success in session
+            $_SESSION['payment_success'] = true;
+            
+            // Redirect to test results page
+            header("Location: Test-Results-Page.php");
             exit();
 
         } catch (Exception $e) {
@@ -338,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- PIN Verification Modal -->
     <div id="pinModal" class="modal">
         <div class="modal-content">
-            <h3>Enter 6-Digit PIN</h3>
+            <h3>Enter the 6-Digit OTP Code to your device</h3>
             <input type="text" id="pinEntry" maxlength="6" pattern="\d{6}" placeholder="Enter PIN" required>
             <button id="submitPin">Submit</button>
             <button id="cancelPin" class="cancel">Cancel</button>
@@ -407,6 +410,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (/^\d{6}$/.test(pin)) {
                 pinInput.value = pin;
                 pinModal.style.display = 'none';
+                pinEntry.value = ''; // Clear the PIN entry field
+                
+                // Show loading spinner
+                const buttonText = document.querySelector('.button-text');
+                const spinner = document.querySelector('.spinner');
+                buttonText.classList.add('hidden');
+                spinner.classList.remove('hidden');
+                
+                // Submit the form
                 paymentForm.submit();
             } else {
                 alert('Please enter a valid 6-digit PIN.');
